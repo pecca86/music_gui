@@ -17,10 +17,12 @@ public class Album implements Iterable<SoundClip>{
     private Album parentAlbum;
     private Album childAlbum;
     private final List<Album> subAlbums = new ArrayList<Album>();
-    private final List<SoundClip> sounds = new ArrayList<SoundClip>();
+    private List<SoundClip> sounds = new ArrayList<SoundClip>();
     private String category;
     private String albumName;
     
+    private List<SoundClip> soundsOld = new ArrayList<SoundClip>();
+    private List<SoundClip> soundsNew = new ArrayList<SoundClip>();
     
     /**
      * Album constructor
@@ -79,15 +81,28 @@ public class Album implements Iterable<SoundClip>{
         subAlbums.remove(subAlbum);
     }
     
+    
+    public void undoLastAction() {
+    	sounds = soundsOld;
+    }
+    
+    public void redoLastAction() {
+    	sounds = soundsNew;
+    }
+    
     /**
      * @param sound Object we want to add to our sub album and all its parent albums
      */
     public void addSong(SoundClip sound) {
+    	soundsOld = this.getSoundClips();
+    	
         sounds.add(sound);
         
         if ( parentAlbum != null ) {
             parentAlbum.addSong(sound);
         }
+        
+        soundsNew = this.getSoundClips();
     }
     
     
@@ -95,11 +110,15 @@ public class Album implements Iterable<SoundClip>{
      * @param sound Object we want to remove from our album and all its child albums
      */
     public void removeSong(SoundClip sound) {
+    	soundsOld = this.getSoundClips();
+    	
         sounds.remove(sound);
 
         for ( Album sub : subAlbums ) {
             sub.removeSong(sound);
         }
+        
+        soundsNew = this.getSoundClips();
     }
     
     
@@ -178,6 +197,17 @@ public class Album implements Iterable<SoundClip>{
         return found;
     }
     
+    /**
+     * @return The albums soundclips in an arraylist
+     */
+    public ArrayList<SoundClip> getSoundClipsOld() {
+        ArrayList<SoundClip> found = new ArrayList<SoundClip>();
+        for ( SoundClip sc : soundsOld ) {
+            found.add(sc);
+        }
+        return found;
+    }
+    
     
     /**
      * @return all the sub albums from the given album
@@ -197,41 +227,29 @@ public class Album implements Iterable<SoundClip>{
      */
     public static void main(String[] args) {
         
-        Album al = new Album("Music");
-        
-        System.out.println("-------------------");
-        Album subA = new Album("Classical Music");
-        
-        SoundClip sound = new SoundClip(new File(".\\soundfiles\\classical.wav"));
-        al.addSubAlbum(al, subA);
-        
-        subA.addSong(sound);
-        
-        Album subB = new Album("Mozart");
-        subA.addSubAlbum(subA, subB);
-        SoundClip bass = new SoundClip(new File(".\\soundfiles\\bass.wav"));
-        subB.addSong(bass);
-        
-        Album subC = new Album("Punk");
-        al.addSubAlbum(al, subC);
-        SoundClip testSound = new SoundClip(new File(".\\soundfiles\\nofx.wav"));
-        subC.addSong(testSound);
-        
-        subC.removeSong(testSound);
-        
-        
-        // TESTING OUR ALBUM ARRAYS:
-        List<Album> test = new ArrayList<Album>();
-        
-        test = al.getAlbums();
-        
-        for ( Album a : test ) {
-            System.out.println(a.getName());
-            System.out.println("--"+a.getSoundClips());
-        }
-        
-        System.out.println(al.getName());
-        System.out.println(al.getSoundClips());
+    	Album a = new Album("Rock");
+    	
+    	File file = new File("gey.avi");
+    	SoundClip sc = new SoundClip(file);
+    	
+    	
+    	
+    	
+    	// TESTING:
+    	a.addSong(sc);
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.removeSong(sc);
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.undoLastAction();
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.redoLastAction();
+    	System.out.println(a.getSoundClips().toString());
         
     }
 }

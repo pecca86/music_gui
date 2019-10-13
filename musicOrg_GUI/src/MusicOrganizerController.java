@@ -110,15 +110,6 @@ public class MusicOrganizerController {
         	    JFileChooser j = new JFileChooser();
         	    j.showOpenDialog(view);
         	    File file = j.getSelectedFile();
-        	   
-        	    //TODO make this work
-        	    /*
-        	    String test = file.getName();
-        	    if (!test.equals("wav")) {
-        	        view.showMessage("wrong filetype!");
-        	        return;
-        	    }
-        	    */
         	    
         	    SoundClip sound = new SoundClip(file);
         	    
@@ -171,6 +162,22 @@ public class MusicOrganizerController {
 		for(int i=0;i<l.size();i++)
 			queue.enqueue(l.get(i));
 	}
+	
+	
+	public void undoAction() {
+		Album a = view.getSelectedAlbum();
+		a.undoLastAction();
+		view.onClipsUpdated();
+	}
+	
+	
+	public void redoAction() {
+		Album a = view.getSelectedAlbum();
+		a.redoLastAction();
+		view.onClipsUpdated();
+	}
+	
+	
 	
 	
 	/**
