@@ -48,6 +48,9 @@ public class Album implements Iterable<SoundClip>{
     }
     
     
+    /**
+     * Tries to undo the last action taken
+     */
     public void undoAction() {
         caretaker.restoreState(this);
     }
