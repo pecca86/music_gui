@@ -1,6 +1,7 @@
 
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 
+
 /**
  * @version 30.9.2019
  *
@@ -30,11 +32,12 @@ public class MusicOrganizerWindow extends JFrame {
 
 	
 
-	private final JTree albumTree;
-	private final SoundClipTable clipTable;
+	private JTree albumTree;
+	private SoundClipTable clipTable;
 	private MusicOrganizerButtonPanel buttonPanel;
 	private MusicOrganizerController controller;
 	private SoundClipPlayer player;
+    
 	
 	/**
 	 * @param contr Controller
@@ -78,7 +81,6 @@ public class MusicOrganizerWindow extends JFrame {
 	 */
 	private JTree makeCatalogTree() {
 		
-
 		DefaultMutableTreeNode tree_root = new DefaultMutableTreeNode();
 		tree_root.setUserObject((Album) controller.getRootAlbum());
 		
@@ -178,6 +180,7 @@ public class MusicOrganizerWindow extends JFrame {
 	public List<SoundClip> getSelectedSoundClips(){
 		return clipTable.getClips(clipTable.getSelectedIndices());
 	}
+	
 	
 	/**
 	 * Return the album currently selected in the album tree. Returns null if no

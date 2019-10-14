@@ -1,0 +1,12 @@
+Korrigerat sen senast:
+- Tar nu bort låtarna rekursivt mot subalbum
+- Användaren kan nu namge de nya albumen som skapas
+- Användaren kan välja in nya låtar från filsystemet
+- Lagt till olika try-catch för att elegantare ta emot fel
+
+Uppgift 3:
+- Lagt till 'undo' och 'redo' knappar i GUI:n via button klassen
+- Lagt till knapparnas funktioner i controller klassen
+- Album.java
+	- Lagt till en inre klass Memento vart vi kan skicka vårt objekt nuvarande läge för att sparas via save()
+	- via restore() kan vi kalla på vårt memento objekt som har de gamla värden i sig och lägga tillbaka de i vårt nuvarande läge

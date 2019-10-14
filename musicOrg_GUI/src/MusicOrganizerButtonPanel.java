@@ -77,6 +77,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	 * 
 	 */
 	
+	
 	private JButton createNewAlbumButton() {
 		//ImageIcon newAlbumIcon = new ImageIcon("icons/folder_add_32.png");
 		JButton newAlbumButton = new JButton("New Album");
@@ -151,7 +152,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	        undoButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.playSoundClips();
+	                controller.undoAction();
 	            }
 	        });
 	        return undoButton;
@@ -165,7 +166,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
            redoButton.addActionListener(new ActionListener() {
                @Override
                public void actionPerformed(ActionEvent e) {
-                   controller.playSoundClips();
+                   controller.redoAction();
                }
            });
            return redoButton;

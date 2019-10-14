@@ -14,13 +14,73 @@ import java.util.List;
  */
 public class Album implements Iterable<SoundClip>{
     
+    
     private Album parentAlbum;
     private Album childAlbum;
-    private final List<Album> subAlbums = new ArrayList<Album>();
-    private final List<SoundClip> sounds = new ArrayList<SoundClip>();
-    private String category;
+    private List<Album> subAlbums = new ArrayList<Album>();
+    private List<SoundClip> sounds = new ArrayList<SoundClip>();
     private String albumName;
+
+    //TODO undo method:
+    AlbumCaretaker caretaker = new AlbumCaretaker();
     
+    /**
+     * Our memento class for storing old states
+     * @author pekka
+     * @version 12.10.2019
+     *
+     */
+    private class Memento {
+        
+        List<Album> mementoSub = new ArrayList<Album>();
+        List<SoundClip> mementoSounds = new ArrayList<SoundClip>();
+        
+        
+        /**
+         * Our memento constructor
+         * @param subAlbums memento arraylist of sub albums
+         * @param sounds memento array lsit of soundclips
+         */
+        public Memento(List<Album> subAlbums, List<SoundClip> sounds) {
+            this.mementoSub = subAlbums;
+            this.mementoSounds = sounds;
+        }
+    }
+    
+    
+    public void undoAction() {
+        caretaker.restoreState(this);
+    }
+    
+    
+    /**
+     * Save the state of our current object into a memento
+     * @return Memento object where we have saved the current objects state
+     */
+    public Memento save() {
+        
+        List<Album>saveAlb = new ArrayList<Album>();
+        saveAlb = this.getAlbums();
+        
+        List<SoundClip>saveSound = new ArrayList<SoundClip>();
+        saveSound = this.getSoundClips();
+        
+        
+        return new Memento(saveAlb, saveSound);
+    }
+    
+    
+    /**
+     * Restores to our last state
+     * @param objMemento a momento object where we have stored our resent state
+     */
+    public void restore(Object objMemento) {
+        Memento memento = (Memento) objMemento;
+        
+        
+        subAlbums = memento.mementoSub;
+        sounds = memento.mementoSounds;
+    }
     
     /**
      * Album constructor
@@ -32,13 +92,14 @@ public class Album implements Iterable<SoundClip>{
     
     
     
-    
     /**
      * Adds a sub album into our existing album
      * @param parent the sub album's parent album
      * @param subAlbum sub album
      */
     public void addSubAlbum(Album parent, Album subAlbum) {
+        caretaker.saveState(this);
+        
         subAlbum.setParent(parent);
         parent.setChild(subAlbum);
         subAlbums.add(subAlbum);
@@ -72,10 +133,20 @@ public class Album implements Iterable<SoundClip>{
     
     
     /**
+     * @return child album
+     */
+    public Album getChild() {
+        return childAlbum;
+    }
+    
+    
+    /**
      * Removes a sub album from our existing album
      * @param subAlbum sub album
      */
     public void removeSubAlbum(Album subAlbum) {
+        caretaker.saveState(this);
+        
         subAlbums.remove(subAlbum);
     }
     
@@ -83,18 +154,23 @@ public class Album implements Iterable<SoundClip>{
      * @param sound Object we want to add to our sub album and all its parent albums
      */
     public void addSong(SoundClip sound) {
+        caretaker.saveState(this);
+        
         sounds.add(sound);
         
         if ( parentAlbum != null ) {
             parentAlbum.addSong(sound);
         }
     }
+
     
     
     /**
      * @param sound Object we want to remove from our album and all its child albums
      */
     public void removeSong(SoundClip sound) {
+        caretaker.saveState(this);
+        
         sounds.remove(sound);
 
         for ( Album sub : subAlbums ) {
@@ -108,22 +184,6 @@ public class Album implements Iterable<SoundClip>{
      */
     public int getSize() {
         return sounds.size();
-    }
-    
-    
-    /**
-     * @param category sets album category
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    
-    
-    /**
-     * @return the category label
-     */
-    public String getCategory() {
-        return this.category;
     }
     
     
@@ -151,6 +211,9 @@ public class Album implements Iterable<SoundClip>{
     }
     
     
+    /**
+     * Gives the name of the album
+     */
     @Override
     public String toString() {
         return getName();
@@ -197,41 +260,44 @@ public class Album implements Iterable<SoundClip>{
      */
     public static void main(String[] args) {
         
-        Album al = new Album("Music");
+        Album a = new Album("rock");
         
-        System.out.println("-------------------");
-        Album subA = new Album("Classical Music");
+        File f =  new File("Ddw");
+        SoundClip sc = new SoundClip(f);
         
-        SoundClip sound = new SoundClip(new File(".\\soundfiles\\classical.wav"));
-        al.addSubAlbum(al, subA);
+
         
-        subA.addSong(sound);
+        // TESTING SONGS
+        AlbumCaretaker tk = new AlbumCaretaker();
         
-        Album subB = new Album("Mozart");
-        subA.addSubAlbum(subA, subB);
-        SoundClip bass = new SoundClip(new File(".\\soundfiles\\bass.wav"));
-        subB.addSong(bass);
+        tk.saveState(a);
+        a.addSong(sc);
+        System.out.println(a.getSoundClips());
         
-        Album subC = new Album("Punk");
-        al.addSubAlbum(al, subC);
-        SoundClip testSound = new SoundClip(new File(".\\soundfiles\\nofx.wav"));
-        subC.addSong(testSound);
+        tk.saveState(a);
+        a.removeSong(sc);
+        System.out.println(a.getSoundClips());
         
-        subC.removeSong(testSound);
+        tk.restoreState(a);
+        System.out.println(a.getSoundClips());
+        
+        //TESTING ALBUMS:
+        System.out.println("======== ALBUMS ==========");
+        
+        Album b = new Album("soft");
+        
+        tk.saveState(a);
+        a.addSubAlbum(a, b);
+        System.out.println(a.getAlbums());
+        
+        tk.saveState(a);
+        a.removeSubAlbum(b);
+        System.out.println(a.getAlbums());
+        
+        tk.restoreState(a);
+        System.out.println(a.getAlbums());
         
         
-        // TESTING OUR ALBUM ARRAYS:
-        List<Album> test = new ArrayList<Album>();
-        
-        test = al.getAlbums();
-        
-        for ( Album a : test ) {
-            System.out.println(a.getName());
-            System.out.println("--"+a.getSoundClips());
-        }
-        
-        System.out.println(al.getName());
-        System.out.println(al.getSoundClips());
         
     }
 }

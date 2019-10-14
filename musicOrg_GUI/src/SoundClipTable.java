@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.swing.JList;
 
+
 public class SoundClipTable extends JList<Object> {
 
 	/**
@@ -13,7 +14,7 @@ public class SoundClipTable extends JList<Object> {
     private static final long serialVersionUID = 1L;
     private List<SoundClip> clips;
 	
-	
+    
 	public SoundClipTable() {
 		super();
 		clips = new ArrayList<SoundClip>();

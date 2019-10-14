@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,12 +12,13 @@ import javax.swing.JOptionPane;
  */
 public class MusicOrganizerController {
 
-    
 	private MusicOrganizerWindow view;
 	private SoundClipBlockingQueue queue;
 	private Album root;
 	private Album album;
 	private List<SoundClip> soundclips;
+	private SoundClipTable sct;
+	
 	
 	/**
 	 * Controller for the MusicOrganizer view
@@ -64,7 +66,7 @@ public class MusicOrganizerController {
 	 * Adds an album to the Music Organizer
 	 * @param selected album
 	 */
-	public void addNewAlbum(Album selected){ //TODO Update parameters if needed - e.g. you might want to give the currently selected album as parameter
+	public void addNewAlbum(Album selected){ 
 	    
 	    try {
     	        String albumName = view.promptForAlbumName();
@@ -75,6 +77,9 @@ public class MusicOrganizerController {
     	        if ( selected == null ) return;
     	        selected.addSubAlbum(selected, a);
     	        view.onAlbumAdded(a);
+    	        
+    	        // TODO Memento
+    	        
 	    } catch ( NullPointerException ex ) {
 	        view.showMessage("No album created!");
 	        return;
@@ -85,12 +90,14 @@ public class MusicOrganizerController {
 	/**
 	 * Removes an album from the Music Organizer
 	 */
-	public void deleteAlbum(){ //TODO Update parameters if needed
+	public void deleteAlbum(){ 
 	    album = view.getSelectedAlbum();
+	    
 	    if ( album == null ) {
 	        System.out.println("no albums selected");
 	        return;
 	    }
+	    
 	    album.removeSubAlbum(album);
 	    view.onAlbumRemoved(album);
 	}
@@ -98,8 +105,8 @@ public class MusicOrganizerController {
 	/**
 	 * Adds sound clips to an album
 	 */
-	public void addSoundClips(){ //TODO Update parameters if needed
-
+	public void addSoundClips(){ 
+	    
 	    try {
         	    Album a = view.getSelectedAlbum();
         	    if ( a == null ) {
@@ -110,24 +117,17 @@ public class MusicOrganizerController {
         	    JFileChooser j = new JFileChooser();
         	    j.showOpenDialog(view);
         	    File file = j.getSelectedFile();
-        	   
-        	    //TODO make this work
-        	    /*
-        	    String test = file.getName();
-        	    if (!test.equals("wav")) {
-        	        view.showMessage("wrong filetype!");
-        	        return;
-        	    }
-        	    */
         	    
         	    SoundClip sound = new SoundClip(file);
-        	    
         	    a.addSong(sound);
         	    view.onClipsUpdated();
+        	    
+        	    
 	    } catch ( NullPointerException ex ) {
 	        view.showMessage("No songs added!");
 	        return;
 	    }
+	    
 	}
 	
 	/**
@@ -136,7 +136,6 @@ public class MusicOrganizerController {
 	public void removeSoundClips(){ //TODO Update parameters if needed
 	    //
 	    Album a = view.getSelectedAlbum();
-	    //album = view.getSelectedAlbum();
 	    
 	    if ( a == null ) return;
 	    if ( a.getSoundClips() == null ) return;
@@ -147,7 +146,6 @@ public class MusicOrganizerController {
 	    
 	    // TODO: Hit någon bättre lösning...
 	    try {
-        	        
         	    for ( SoundClip sc : soundclips ) {
         	        if ( viewSc.get(0).equals(sc) ) a.removeSong(sc);
         	    }
@@ -170,6 +168,29 @@ public class MusicOrganizerController {
 		List<SoundClip> l = view.getSelectedSoundClips();
 		for(int i=0;i<l.size();i++)
 			queue.enqueue(l.get(i));
+		
+		album = view.getSelectedAlbum();
+	}
+	
+	
+	/**
+	 * Undoes the recent action
+	 */
+	public void undoAction() {
+	    System.out.println("Undoing");
+	    Album a = view.getSelectedAlbum();
+	    a.undoAction();
+	    view.onClipsUpdated();
+	    
+	    view.onAlbumAdded(a.getChild());
+	}
+	
+	
+	/**
+	 * Redoes the recent revoked action
+	 */
+	public void redoAction() {
+	    System.out.println("Redoing");
 	}
 	
 	
