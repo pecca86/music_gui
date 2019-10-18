@@ -127,8 +127,8 @@ public class MusicOrganizerController {
 	public void addSoundClips(){ 
 	    
 	    try {
-        	    Album a = view.getSelectedAlbum();
-        	    if ( a == null ) {
+        	    Album album = view.getSelectedAlbum();
+        	    if ( album == null ) {
         	        System.out.println("no album selected!");
         	        return;
         	    }
@@ -138,7 +138,11 @@ public class MusicOrganizerController {
         	    File file = j.getSelectedFile();
         	    
         	    SoundClip sound = new SoundClip(file);
-        	    a.addSong(sound);
+        	    
+        	    SoundAddCommand sAddCommand = new SoundAddCommand(album, sound);
+        	    albumCommander.setCommand(sAddCommand);
+        	    albumCommander.execute();
+        	    
         	    view.onClipsUpdated();
         	    
         	    
