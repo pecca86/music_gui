@@ -85,7 +85,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		newAlbumButton.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
-				controller.addNewAlbum(view.getSelectedAlbum());
+				controller.addNewAlbum();
 			}
 		});
 		return newAlbumButton;

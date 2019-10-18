@@ -15,10 +15,9 @@ public class MusicOrganizerController {
 	private MusicOrganizerWindow view;
 	private SoundClipBlockingQueue queue;
 	private Album root;
-	private Album album;
 	private List<SoundClip> soundclips;
 	
-	private AlbumCommander albumCommander;
+	private AlbumCommander albumCommander = new AlbumCommander();
 	/**
 	 * Controller for the MusicOrganizer view
 	 */
@@ -63,9 +62,8 @@ public class MusicOrganizerController {
 	
 	/**
 	 * Adds an album to the Music Organizer
-	 * @param selected album
 	 */
-	public void addNewAlbum(Album selected){ 
+	public void addNewAlbum(){ 
 	    
 	    try {
 	        // prompts for new album name
@@ -78,7 +76,6 @@ public class MusicOrganizerController {
             
             // creates AlbumAdder and albumcommander
             AlbumAddClass albumAddClass = new AlbumAddClass(parent, child);
-            albumCommander = new AlbumCommander();
             
             // sets the parameters for albumcommander and executes:
             albumCommander.setCommand(albumAddClass);
@@ -97,18 +94,30 @@ public class MusicOrganizerController {
 	
 	
 	/**
-	 * Removes an album from the Music Organizer
+	 * Removes an album from the Music Organizer, except the root album
 	 */
 	public void deleteAlbum(){ 
-	    album = view.getSelectedAlbum();
 	    
-	    if ( album == null ) {
-	        System.out.println("no albums selected");
+	    Album selected = view.getSelectedAlbum();
+	    
+	    if ( selected == null) {
+	        view.showMessage("No albums selected!");
 	        return;
 	    }
 	    
-	    album.removeSubAlbum(album);
-	    view.onAlbumRemoved(album);
+	    Album parent = selected.getParent();
+	    if ( parent == null )  {
+	        view.showMessage("Album is not a subalbum!");
+	        return;
+	    }
+	    
+	    AlbumRemoveClass albumRm = new AlbumRemoveClass(parent, selected);
+	    
+	    albumCommander.setCommand(albumRm);
+	    albumCommander.execute();
+	    
+	    view.onAlbumRemoved(selected);
+
 	}
 	
 	
@@ -178,8 +187,6 @@ public class MusicOrganizerController {
 		List<SoundClip> l = view.getSelectedSoundClips();
 		for(int i=0;i<l.size();i++)
 			queue.enqueue(l.get(i));
-		
-		album = view.getSelectedAlbum();
 	}
 	
 	
