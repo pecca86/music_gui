@@ -81,11 +81,12 @@ public class AlbumCommander implements Command {
         System.out.println(album.getSoundClips()); // should print
         
         // SONG REMOVED:
-        
+        /*
         SoundRemoveCommand sRm = new SoundRemoveCommand(album, sc);
         album.setCommand(sRm);
         album.execute();
         System.out.println(album.getSoundClips());
+        */
     }
 
 }

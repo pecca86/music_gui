@@ -98,6 +98,7 @@ public class MusicOrganizerController {
 	 */
 	public void deleteAlbum(){ 
 	    
+	    // Get the selected album
 	    Album selected = view.getSelectedAlbum();
 	    
 	    if ( selected == null) {
@@ -105,17 +106,21 @@ public class MusicOrganizerController {
 	        return;
 	    }
 	    
+	    // Get the parent of the selected album
 	    Album parent = selected.getParent();
 	    if ( parent == null )  {
 	        view.showMessage("Album is not a subalbum!");
 	        return;
 	    }
 	    
+	    // Create a Album remove command
 	    AlbumRemoveClass albumRm = new AlbumRemoveClass(parent, selected);
 	    
+	    // Set the command to the album commander and execute
 	    albumCommander.setCommand(albumRm);
 	    albumCommander.execute();
 	    
+	    // update view
 	    view.onAlbumRemoved(selected);
 
 	}
@@ -127,22 +132,28 @@ public class MusicOrganizerController {
 	public void addSoundClips(){ 
 	    
 	    try {
+	            // Get the selected album
         	    Album album = view.getSelectedAlbum();
         	    if ( album == null ) {
         	        System.out.println("no album selected!");
         	        return;
         	    }
         	    
+        	    // Choose file to add and put it in the SoundClip object
         	    JFileChooser j = new JFileChooser();
         	    j.showOpenDialog(view);
         	    File file = j.getSelectedFile();
         	    
         	    SoundClip sound = new SoundClip(file);
         	    
+        	    // Create a new Sound adder command
         	    SoundAddCommand sAddCommand = new SoundAddCommand(album, sound);
+        	    
+        	    // Set the command to the albumcommander and execute
         	    albumCommander.setCommand(sAddCommand);
         	    albumCommander.execute();
         	    
+        	    // Update view
         	    view.onClipsUpdated();
         	    
         	    
@@ -156,29 +167,28 @@ public class MusicOrganizerController {
 	/**
 	 * Removes sound clips from an album
 	 */
-	public void removeSoundClips(){ //TODO Update parameters if needed
-	    //
-	    Album a = view.getSelectedAlbum();
+	public void removeSoundClips(){
 	    
-	    if ( a == null ) return;
-	    if ( a.getSoundClips() == null ) return;
+	    // Get the selected album
+	    Album album = view.getSelectedAlbum();
 	    
-	    soundclips = a.getSoundClips();
+	    // Check if album is selected and if it contains soundclips
+	    if ( album == null ) return;
+	    if ( album.getSoundClips() == null ) return;
+	    
+	    // Set the selected album's soundclip in to our soundclips arraylist
+	    soundclips = album.getSoundClips();
 	  
-	    List<SoundClip> viewSc = view.getSelectedSoundClips();
+	    // Create a list where we put all the selected sound clips
+	    List<SoundClip> viewSc = new ArrayList<SoundClip>();
+	    viewSc = view.getSelectedSoundClips();
 	    
-	    // TODO: Hit någon bättre lösning...
-	    try {
-        	    for ( SoundClip sc : soundclips ) {
-        	        if ( viewSc.get(0).equals(sc) ) a.removeSong(sc);
-        	    }
-	    } catch ( java.lang.IndexOutOfBoundsException ex ) {
-	        System.out.println("index out of bounds!");
-	        return;
-	    }
+	    // Create a new sound remove command, to where we send our selected album and selected soundclips
+        SoundRemoveCommand soundRm = new SoundRemoveCommand(album, (ArrayList<SoundClip>) viewSc);
+        albumCommander.setCommand(soundRm);
+        albumCommander.execute();
 	    
 	    view.onClipsUpdated();
-	           
 	}
 	
 	/**
