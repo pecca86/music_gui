@@ -1,11 +1,2 @@
-/MusicOrganizerButtonPanel$6.class
-/MusicOrganizerButtonPanel$7.class
-/Album$Memento.class
-/AlbumCaretaker.class
-/Command.class
-/MusicOrganizerWindow$Memento.class
-/SoundClipTable$Memento.class
-/AlbumAddClass.class
-/AlbumRemoveClass.class
-/SoundClipAdd.class
-/SoundClipRemove.class
+/SoundAddCommand.class
+/SoundRemoveCommand.class

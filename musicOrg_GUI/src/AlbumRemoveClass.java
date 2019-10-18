@@ -2,15 +2,17 @@
 public class AlbumRemoveClass implements Command {
     
     Album album;
+    Album subAlbum;
     
-    public AlbumRemoveClass(Album album) {
+    public AlbumRemoveClass(Album album, Album subAlbum) {
         this.album = album;
+        this.subAlbum = subAlbum;
     }
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
-        
+        System.out.println("Album removed");
+        album.removeSubAlbum(subAlbum);
     }
 
     @Override

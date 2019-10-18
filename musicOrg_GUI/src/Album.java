@@ -12,8 +12,14 @@ import java.util.List;
  * @version 17.9.2019
  *
  */
-public class Album implements Iterable<SoundClip>{
+public class Album implements Iterable<SoundClip>, Command {
     
+    // COMMAND PATTERN START
+    
+    Command slot;
+    AlbumAddClass albumAdder;
+    
+    // COMMAND PATTERN END
     
     private Album parentAlbum;
     private Album childAlbum;
@@ -85,6 +91,33 @@ public class Album implements Iterable<SoundClip>{
         sounds = memento.mementoSounds;
     }
     
+    // COMMAND PATTERN METHODS:
+    
+    
+    @Override
+    public void execute() {
+        slot.execute();
+    }
+
+
+    @Override
+    public void undo() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void setCommand(Command command) {
+        slot = command;
+    }
+    
+    public void getSlot() {
+        System.out.println(slot);
+    }
+    
+    // END OF COMMAND PATTERN METHODS:
+    
+    
+    
     /**
      * Album constructor
      * @param albumName the name of the album
@@ -101,11 +134,14 @@ public class Album implements Iterable<SoundClip>{
      * @param subAlbum sub album
      */
     public void addSubAlbum(Album parent, Album subAlbum) {
-        caretaker.saveState(this);
+
+        
+        //caretaker.saveState(this);
         
         subAlbum.setParent(parent);
         parent.setChild(subAlbum);
         subAlbums.add(subAlbum);
+        
     }
     
     
@@ -263,44 +299,47 @@ public class Album implements Iterable<SoundClip>{
      */
     public static void main(String[] args) {
         
-        Album a = new Album("rock");
+        Album album = new Album("gg");
+        Album sub = new Album("DD");
         
-        File f =  new File("Ddw");
+        File f = new File("first sound clip");
+        File ff = new File("second sound clip");
         SoundClip sc = new SoundClip(f);
+        SoundClip sc2 = new SoundClip(ff);
         
 
-        
-        // TESTING SONGS
-        AlbumCaretaker tk = new AlbumCaretaker();
-        
-        tk.saveState(a);
-        a.addSong(sc);
-        System.out.println(a.getSoundClips());
-        
-        tk.saveState(a);
-        a.removeSong(sc);
-        System.out.println(a.getSoundClips());
-        
-        tk.restoreState(a);
-        System.out.println(a.getSoundClips());
-        
-        //TESTING ALBUMS:
-        System.out.println("======== ALBUMS ==========");
-        
-        Album b = new Album("soft");
-        
-        tk.saveState(a);
-        a.addSubAlbum(a, b);
-        System.out.println(a.getAlbums());
-        
-        tk.saveState(a);
-        a.removeSubAlbum(b);
-        System.out.println(a.getAlbums());
-        
-        tk.restoreState(a);
-        System.out.println(a.getAlbums());
+        // ADDING ALBUM:
+        AlbumAddClass albumAdder = new AlbumAddClass(album, sub);
+        album.setCommand(albumAdder);
+        album.execute();
+        System.out.println(album.getAlbums());
         
         
+        // REMOVING ALBUM:
+        AlbumRemoveClass rm = new AlbumRemoveClass(album, sub);
+        album.setCommand(rm);
+        album.execute();
+        System.out.println(album.getAlbums());
+        
+        // ADDING AGAIN
+        album.setCommand(albumAdder);
+        album.execute();
+        System.out.println(album.getAlbums());
+        
+        // SONG ADDED:
+        
+        SoundAddCommand sAdd = new SoundAddCommand(album, sc);
+        album.setCommand(sAdd);
+        album.execute();
+        System.out.println(album.getSoundClips()); // should print
+        
+        // SONG REMOVED:
+        
+        SoundRemoveCommand sRm = new SoundRemoveCommand(album, sc);
+        album.setCommand(sRm);
+        album.execute();
+        System.out.println(album.getSoundClips());
         
     }
+
 }
