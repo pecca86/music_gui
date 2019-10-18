@@ -5,7 +5,7 @@
 /**
  * @author pekka
  * @version 18.10.2019
- *
+ * Test class for our AlbumCommander
  */
 public class AlbumCommanderTest {
 

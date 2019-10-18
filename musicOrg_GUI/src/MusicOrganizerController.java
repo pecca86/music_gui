@@ -17,9 +17,8 @@ public class MusicOrganizerController {
 	private Album root;
 	private Album album;
 	private List<SoundClip> soundclips;
-	private SoundClipTable sct;
 	
-	
+	private AlbumCommander albumCommander;
 	/**
 	 * Controller for the MusicOrganizer view
 	 */
@@ -69,23 +68,33 @@ public class MusicOrganizerController {
 	public void addNewAlbum(Album selected){ 
 	    
 	    try {
-    	        String albumName = view.promptForAlbumName();
-    	        
-    	        if ( albumName.isEmpty() ) albumName = "new album";
-    	        
-    	        Album a = new Album(albumName);
-    	        if ( selected == null ) return;
-    	        selected.addSubAlbum(selected, a);
-    	        view.onAlbumAdded(a);
-    	        
-    	        // TODO Memento
-    	        
+	        // prompts for new album name
+            String albumName = view.promptForAlbumName();
+            if ( albumName.isEmpty() ) albumName = "new album";
+            
+            // creates child and partent albums
+            Album child = new Album(albumName);
+            Album parent = view.getSelectedAlbum();
+            
+            // creates AlbumAdder and albumcommander
+            AlbumAddClass albumAddClass = new AlbumAddClass(parent, child);
+            albumCommander = new AlbumCommander();
+            
+            // sets the parameters for albumcommander and executes:
+            albumCommander.setCommand(albumAddClass);
+            albumCommander.execute();
+            
+            // updates the view
+            view.onAlbumAdded(child);
+	        
+            
 	    } catch ( NullPointerException ex ) {
-	        view.showMessage("No album created!");
-	        return;
-	    }
-
+            view.showMessage("No album created!");
+            return;
+        }
 	}
+	
+	
 	
 	/**
 	 * Removes an album from the Music Organizer
@@ -101,6 +110,7 @@ public class MusicOrganizerController {
 	    album.removeSubAlbum(album);
 	    view.onAlbumRemoved(album);
 	}
+	
 	
 	/**
 	 * Adds sound clips to an album
