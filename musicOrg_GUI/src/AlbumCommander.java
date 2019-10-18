@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.List;
 
 /**
  * Our album commander
@@ -6,33 +7,56 @@ import java.io.File;
  * @version 18.10.2019
  *
  */
-public class AlbumCommander implements Command {
+public class AlbumCommander {
     
-    Command slot;
+    Command command;
+    Command undoCommand;
+    List<Command> addCommands;
+    List<Command> removeCommans;
+    Command addCommand;
+    Command removeCommand;
     
     /**
      * Our constructor
      */
-    public AlbumCommander() {};
+    public AlbumCommander() {
+        //
+    }
     
 
-    @Override
-    public void execute() {
-        slot.execute();
-    }
-
-    @Override
-    public void undo() {
-        // TODO Auto-generated method stub
-        
+    /**
+     * the method we call for when a button is pushed
+     */
+    public void onAddButtonWasPushed() {
+        addCommand.execute();
+        undoCommand = addCommand;
     }
     
     
     /**
-     * @param command set the Class of which method we want to execute
+     * When the remove button is pushed
      */
-    public void setCommand(Command command) {
-        slot = command;
+    public void removeButtonWasPushed() {
+        removeCommand.execute();
+        undoCommand = removeCommand;
+    }
+
+    
+    /**
+     * The method we call for when the undo button is pushed
+     */
+    public void undoButtonWasPushed() {
+        undoCommand.undo();
+    }
+    
+    
+    /**
+     * @param c set the Class of which method we want to execute
+     */
+    public void setCommand(Command c) {
+        addCommand = c;
+        removeCommand = c;
+        undoCommand = c;
     }
     
     
@@ -41,52 +65,7 @@ public class AlbumCommander implements Command {
      * @param args not in use
      */
     public static void main(String[] args) {
-        
-        Album album = new Album("gg");
-        Album sub = new Album("DD");
-        
-        File f = new File("first sound clip");
-        File ff = new File("second sound clip");
-        
-        SoundClip sc = new SoundClip(f);
-        SoundClip sc2 = new SoundClip(ff);
-        
-
-        // ADDING ALBUM:
-        
-        AlbumAddClass albumAdder = new AlbumAddClass(album, sub);
-        album.setCommand(albumAdder);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        
-        // REMOVING ALBUM:
-        
-        AlbumRemoveClass rm = new AlbumRemoveClass(album, sub);
-        album.setCommand(rm);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        // ADDING AGAIN
-        
-        album.setCommand(albumAdder);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        // SONG ADDED:
-        
-        SoundAddCommand sAdd = new SoundAddCommand(album, sc);
-        album.setCommand(sAdd);
-        album.execute();
-        System.out.println(album.getSoundClips()); // should print
-        
-        // SONG REMOVED:
-        /*
-        SoundRemoveCommand sRm = new SoundRemoveCommand(album, sc);
-        album.setCommand(sRm);
-        album.execute();
-        System.out.println(album.getSoundClips());
-        */
+        //
     }
 
 }

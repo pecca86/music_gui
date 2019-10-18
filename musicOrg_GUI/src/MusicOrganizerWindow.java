@@ -222,9 +222,8 @@ public class MusicOrganizerWindow extends JFrame {
 			
 			// TODO: Get the parent album of newAlbum
 			Album parentAlbum; 
+			if ( newAlbum.getParent() == null ) return;
 			parentAlbum = newAlbum.getParent();
-			
-			if (parentAlbum == null ) return;
 			
 			if(parentAlbum.equals(parent.getUserObject())){
 				

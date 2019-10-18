@@ -79,7 +79,7 @@ public class MusicOrganizerController {
             
             // sets the parameters for albumcommander and executes:
             albumCommander.setCommand(albumAddClass);
-            albumCommander.execute();
+            albumCommander.onAddButtonWasPushed();
             
             // updates the view
             view.onAlbumAdded(child);
@@ -118,7 +118,7 @@ public class MusicOrganizerController {
 	    
 	    // Set the command to the album commander and execute
 	    albumCommander.setCommand(albumRm);
-	    albumCommander.execute();
+	    albumCommander.removeButtonWasPushed();
 	    
 	    // update view
 	    view.onAlbumRemoved(selected);
@@ -151,7 +151,7 @@ public class MusicOrganizerController {
         	    
         	    // Set the command to the albumcommander and execute
         	    albumCommander.setCommand(sAddCommand);
-        	    albumCommander.execute();
+        	    albumCommander.onAddButtonWasPushed();
         	    
         	    // Update view
         	    view.onClipsUpdated();
@@ -186,7 +186,7 @@ public class MusicOrganizerController {
 	    // Create a new sound remove command, to where we send our selected album and selected soundclips
         SoundRemoveCommand soundRm = new SoundRemoveCommand(album, (ArrayList<SoundClip>) viewSc);
         albumCommander.setCommand(soundRm);
-        albumCommander.execute();
+        albumCommander.removeButtonWasPushed();
 	    
 	    view.onClipsUpdated();
 	}

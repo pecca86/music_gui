@@ -30,8 +30,9 @@ public class AlbumAddClass implements Command {
     
     @Override
     public void undo() {
-        // TODO Auto-generated method stub
+        System.out.println("Undoing add...");
         
+        album.removeSubAlbum(subAlbum);
     }
 
 }

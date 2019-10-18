@@ -20,12 +20,17 @@ public class AlbumCommanderTest {
         
         AlbumAddClass addCom = new AlbumAddClass(album, sub);
         commander.setCommand(addCom);
-        commander.execute();
+        commander.onAddButtonWasPushed();
         System.out.println(album.getAlbums());
         
         AlbumRemoveClass rmAlb = new AlbumRemoveClass(album, sub);
         commander.setCommand(rmAlb);
-        commander.execute();
+        commander.removeButtonWasPushed();
         System.out.println(album.getAlbums());
+        
+        
+        commander.undoButtonWasPushed();
+        System.out.println(album.getAlbums());
+        
     }
 }
