@@ -1,8 +1,14 @@
 
+/**
+ * @author pekka
+ * @version 18.10.2019
+ *
+ */
 public class AlbumAddClass implements Command {
     
     Album album;
     Album subAlbum;
+
     
     /**
      * @param album our parent album
@@ -13,6 +19,7 @@ public class AlbumAddClass implements Command {
         this.subAlbum = subAlbum;
     }
 
+    
     @Override
     public void execute() {
         System.out.println("Album added");
@@ -20,6 +27,7 @@ public class AlbumAddClass implements Command {
         album.addSubAlbum(album, subAlbum);
     }
 
+    
     @Override
     public void undo() {
         // TODO Auto-generated method stub

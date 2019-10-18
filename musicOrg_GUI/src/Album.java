@@ -17,7 +17,6 @@ public class Album implements Iterable<SoundClip>, Command {
     // COMMAND PATTERN START
     
     Command slot;
-    AlbumAddClass albumAdder;
     
     // COMMAND PATTERN END
     
@@ -110,10 +109,7 @@ public class Album implements Iterable<SoundClip>, Command {
         slot = command;
     }
     
-    public void getSlot() {
-        System.out.println(slot);
-    }
-    
+
     // END OF COMMAND PATTERN METHODS:
     
     
@@ -125,25 +121,7 @@ public class Album implements Iterable<SoundClip>, Command {
     public Album(String albumName) {
         this.albumName = albumName;
     }
-    
-    
-    
-    /**
-     * Adds a sub album into our existing album
-     * @param parent the sub album's parent album
-     * @param subAlbum sub album
-     */
-    public void addSubAlbum(Album parent, Album subAlbum) {
 
-        
-        //caretaker.saveState(this);
-        
-        subAlbum.setParent(parent);
-        parent.setChild(subAlbum);
-        subAlbums.add(subAlbum);
-        
-    }
-    
     
     /**
      * @param parent set's the parent
@@ -176,6 +154,23 @@ public class Album implements Iterable<SoundClip>, Command {
      */
     public Album getChild() {
         return childAlbum;
+    }
+    
+    
+    /**
+     * Adds a sub album into our existing album
+     * @param parent the sub album's parent album
+     * @param subAlbum sub album
+     */
+    public void addSubAlbum(Album parent, Album subAlbum) {
+
+        
+        //caretaker.saveState(this);
+        
+        subAlbum.setParent(parent);
+        parent.setChild(subAlbum);
+        subAlbums.add(subAlbum);
+        
     }
     
     
@@ -299,46 +294,7 @@ public class Album implements Iterable<SoundClip>, Command {
      */
     public static void main(String[] args) {
         
-        Album album = new Album("gg");
-        Album sub = new Album("DD");
-        
-        File f = new File("first sound clip");
-        File ff = new File("second sound clip");
-        SoundClip sc = new SoundClip(f);
-        SoundClip sc2 = new SoundClip(ff);
-        
-
-        // ADDING ALBUM:
-        AlbumAddClass albumAdder = new AlbumAddClass(album, sub);
-        album.setCommand(albumAdder);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        
-        // REMOVING ALBUM:
-        AlbumRemoveClass rm = new AlbumRemoveClass(album, sub);
-        album.setCommand(rm);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        // ADDING AGAIN
-        album.setCommand(albumAdder);
-        album.execute();
-        System.out.println(album.getAlbums());
-        
-        // SONG ADDED:
-        
-        SoundAddCommand sAdd = new SoundAddCommand(album, sc);
-        album.setCommand(sAdd);
-        album.execute();
-        System.out.println(album.getSoundClips()); // should print
-        
-        // SONG REMOVED:
-        
-        SoundRemoveCommand sRm = new SoundRemoveCommand(album, sc);
-        album.setCommand(sRm);
-        album.execute();
-        System.out.println(album.getSoundClips());
+        //
         
     }
 

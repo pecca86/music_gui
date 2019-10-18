@@ -1,2 +1,4 @@
 /SoundAddCommand.class
 /SoundRemoveCommand.class
+/AlbumCommander.class
+/AlbumCommanderTest.class
