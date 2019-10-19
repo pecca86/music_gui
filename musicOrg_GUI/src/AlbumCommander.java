@@ -46,9 +46,10 @@ public class AlbumCommander {
     
     /**
      * The method we call for when the undo button is pushed
+     * @param memento ff
      */
-    public void undoButtonWasPushed() {
-        undoCommand.undo();
+    public void undoButtonWasPushed(Command memento) {
+        memento.undo();
     }
     
     
@@ -58,5 +59,15 @@ public class AlbumCommander {
      */
     public static void main(String[] args) {
         //
+    }
+
+
+    public void save(Command memento) {
+        memento.execute();
+    }
+
+
+    public void restore(Command memento) {
+        memento.undo();
     }
 }

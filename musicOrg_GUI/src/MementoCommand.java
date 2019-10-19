@@ -27,21 +27,19 @@ public class MementoCommand implements Command {
         }
     }
 
-
-    @Override
-    public void undo() {
-        Album restored = storedState.mementoAlbum;
-        album = restored;
-        System.out.println("albums restored: " + restored.getAlbums());
-    }
-    
-
     @Override
     public void execute() {
         Album store = album;
         storedState = new Memento(store);
         
         Album test = storedState.mementoAlbum;
-        System.out.println("now storing: " + test);
+        System.out.println("now storing: " + test + " with albums: "  + test.getAlbums());
+    }
+
+    @Override
+    public void undo() {
+        Album restored = storedState.mementoAlbum;
+        album = restored;
+        System.out.println("Memento albums restored: " + restored.getAlbums());
     }
 }

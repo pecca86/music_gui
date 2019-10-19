@@ -5,3 +5,4 @@
 - Memento Pattern:
 	- Fick Memento att fungera i själva consolen (se MementoTest.java) men inte i GUI:n
 	- Gjorde också en MementoCommand klass, men fick inte ihop logiken, klassen ännu kvar men används ingenstans
+	- Själva testet av MementoCommand klassen hittas även i MementoTest, av någon orsak så ändras det albumen som är sparat inne i memento private klassen, då ändringar görs i arbetskopian av albumet --- har inte kommit underfund varför...

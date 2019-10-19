@@ -258,5 +258,4 @@ public class Album implements Iterable<SoundClip>{
         subAlbums = memento.mementoSub;
         sounds = memento.mementoSounds;
     }
-    
 }

@@ -56,6 +56,35 @@ public class MementoTest {
         caretaker.restoreState(album2);
         System.out.println(album2.getSoundClips());
         
+        System.out.println("\n==============================\n");
+        
+        
+        AlbumCommander commander = new AlbumCommander();
+        AlbumAddClass addClass = new AlbumAddClass(album3, album4);
+        AlbumRemoveClass rmClass = new AlbumRemoveClass(album3, album4);
+        MementoCommand mc = new MementoCommand(album3);
+        
+        // adding album4 to album3
+        commander.setCommand(addClass);
+        commander.onButtonWasPushed();
+        System.out.println(album3.getAlbums());
+        System.out.println("\nsaving to memento...");
+        commander.save(mc);
+        System.out.println("");
+        
+        AlbumAddClass addClass2 = new AlbumAddClass(album3, album2);
+        commander.setCommand(addClass2);
+        commander.onButtonWasPushed();
+        System.out.println(album3.getAlbums());
+        
+        AlbumAddClass addClass3 = new AlbumAddClass(album3, album);
+        commander.setCommand(addClass3);
+        commander.onButtonWasPushed();
+        System.out.println(album3.getAlbums());
+        
+        //commander.save(mc);
+        commander.restore(mc);
+        System.out.println(album3.getAlbums());
     }
 
 }
