@@ -13,6 +13,7 @@ public class AlbumCommander {
     List<Command> addCommands;
     List<Command> removeCommans;
     
+    Command command;
     Command addCommand;
     Command removeCommand;
     Command undoCommand;
@@ -29,28 +30,19 @@ public class AlbumCommander {
      * @param c our command
      */
     public void setCommand(Command c) {
-        addCommand = c;
-        removeCommand = c;
+        command = c;
+        //removeCommand = c;
     }
     
 
     /**
      * the method we call for when a button is pushed
      */
-    public void onAddButtonWasPushed() {
-        addCommand.execute();
-        undoCommand = addCommand;
+    public void onButtonWasPushed() {
+        command.execute();
+        undoCommand = command;
     }
     
-    
-    /**
-     * When the remove button is pushed
-     */
-    public void removeButtonWasPushed() {
-        removeCommand.execute();
-        undoCommand = removeCommand;
-    }
-
     
     /**
      * The method we call for when the undo button is pushed

@@ -32,5 +32,4 @@ public class AlbumRemoveClass implements Command {
         System.out.println("Undoing remove...");
         album.addSubAlbum(album, deleted);
     }
-
 }

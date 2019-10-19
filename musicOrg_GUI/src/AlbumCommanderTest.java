@@ -22,15 +22,12 @@ public class AlbumCommanderTest {
         AlbumRemoveClass rmAlb = new AlbumRemoveClass(album, sub);
         
         commander.setCommand(addCom);
-        commander.onAddButtonWasPushed();
+        commander.onButtonWasPushed();
         System.out.println(album.getAlbums());
         
         commander.setCommand(rmAlb);
-        commander.removeButtonWasPushed();
+        commander.onButtonWasPushed();
         System.out.println(album.getAlbums());
-        
-        Command addAblumWithL = ()-> { album.addSubAlbum(album, sub); };
-        
     }
 
 }

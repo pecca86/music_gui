@@ -17,7 +17,11 @@ public class MusicOrganizerController {
 	private Album root;
 	private List<SoundClip> soundclips;
 	
+	//MEMENTO ATTRIBUTES:
 	private AlbumCommander albumCommander = new AlbumCommander();
+	private AlbumCaretaker caretaker = new AlbumCaretaker();
+	private MementoCommand mementoCommand;
+	
 	/**
 	 * Controller for the MusicOrganizer view
 	 */
@@ -76,11 +80,10 @@ public class MusicOrganizerController {
             
             // creates AlbumAdder and albumcommander
             AlbumAddClass albumAddClass = new AlbumAddClass(parent, child);
-            AlbumRemoveClass removeAlbum = new AlbumRemoveClass(parent, child);
             
             // sets the parameters for albumcommander and executes:
             albumCommander.setCommand(albumAddClass);
-            albumCommander.onAddButtonWasPushed();
+            albumCommander.onButtonWasPushed();
             
             // updates the view
             view.onAlbumAdded(child);
@@ -113,18 +116,8 @@ public class MusicOrganizerController {
 	        view.showMessage("Album is not a subalbum!");
 	        return;
 	    }
-	    
-	    // Create a Album remove command
-	    AlbumRemoveClass albumRm = new AlbumRemoveClass(parent, selected);
-	    AlbumAddClass albumAddClass = new AlbumAddClass(parent, selected);
-	    
-	    // Set the command to the album commander and execute
-	    albumCommander.setCommand(albumRm);
-	    albumCommander.removeButtonWasPushed();
-	    
-	    // update view
-	    view.onAlbumRemoved(selected);
 
+	    view.onAlbumRemoved(selected);
 	}
 	
 	
@@ -153,7 +146,7 @@ public class MusicOrganizerController {
         	    
         	    // Set the command to the albumcommander and execute
         	    albumCommander.setCommand(sAddCommand);
-        	    albumCommander.onAddButtonWasPushed();
+        	    albumCommander.onButtonWasPushed();
         	    
         	    // Update view
         	    view.onClipsUpdated();
@@ -188,7 +181,7 @@ public class MusicOrganizerController {
 	    // Create a new sound remove command, to where we send our selected album and selected soundclips
         SoundRemoveCommand soundRm = new SoundRemoveCommand(album, (ArrayList<SoundClip>) viewSc);
         albumCommander.setCommand(soundRm);
-        albumCommander.removeButtonWasPushed();
+        albumCommander.onButtonWasPushed();
 	    
 	    view.onClipsUpdated();
 	}
@@ -210,7 +203,9 @@ public class MusicOrganizerController {
 	 * Undoes the recent action
 	 */
 	public void undoAction() {
-	    albumCommander.undoButtonWasPushed();
+	    //albumCommander.undoButtonWasPushed();
+	    Album albumSelected = view.getSelectedAlbum();
+	    caretaker.restoreState(albumSelected);
 	}
 	
 	

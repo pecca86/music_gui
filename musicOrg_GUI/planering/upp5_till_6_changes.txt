@@ -1,6 +1,7 @@
 - Implementera Command pattern
 - i.o.m command pattern så är Controllerns metoder uppdaterade
 - går nu att välja flera låtar man vill ta bort från albumet
-- Command.java:
-	- store()
-	- load()
+
+- Memento Pattern:
+	- Fick Memento att fungera i själva consolen (se MementoTest.java) men inte i GUI:n
+	- Gjorde också en MementoCommand klass, men fick inte ihop logiken, klassen ännu kvar men används ingenstans

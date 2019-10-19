@@ -8,12 +8,11 @@ public class AlbumCaretaker {
     
     Object objMemento;
     
-    
     /**
-     * @param album the album which state we are saving
+     * @param album ..
      */
     public void saveState(Album album) {
-        //objMemento = album.save();
+       objMemento = album.save();
     }
     
     
@@ -21,6 +20,6 @@ public class AlbumCaretaker {
      * @param album the album which state we are restoring
      */
     public void restoreState(Album album) {
-        //album.restore(objMemento);
+        album.restore(objMemento);
     }
 }

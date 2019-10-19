@@ -203,5 +203,60 @@ public class Album implements Iterable<SoundClip>{
     public static void main(String[] args) {
         //
     }
-
+    
+    
+    
+    /**
+     * 
+     * @author pekka
+     * @version 19.10.2019
+     * Memento object for storing our ablum state
+     */
+    private class Memento {
+        
+        List<Album> mementoSub = new ArrayList<Album>();
+        List<SoundClip> mementoSounds = new ArrayList<SoundClip>();
+        
+        
+        /**
+         * Our memento constructor
+         * @param subAlbums memento arraylist of sub albums
+         * @param sounds memento array lsit of soundclips
+         */
+        public Memento(List<Album> subAlbums, List<SoundClip> sounds) {
+            this.mementoSub = subAlbums;
+            this.mementoSounds = sounds;
+        }
+    }
+    
+    
+    /**
+     * Save the state of our current object into a memento
+     * @return Memento object where we have saved the current objects state
+     */
+    public Memento save() {
+        
+        // TODO: check if necessary..
+        List<Album>saveAlb = new ArrayList<Album>();
+        saveAlb = this.getAlbums();
+        
+        List<SoundClip>saveSound = new ArrayList<SoundClip>();
+        saveSound = this.getSoundClips();
+        
+        // Puts the arrays we want to save into our memento object
+        return new Memento(saveAlb, saveSound);
+    }
+    
+    
+    /**
+     * Restores to our last state
+     * @param objMemento a momento object where we have stored our resent state
+     */
+    public void restore(Object objMemento) {
+        Memento memento = (Memento) objMemento;
+        
+        subAlbums = memento.mementoSub;
+        sounds = memento.mementoSounds;
+    }
+    
 }

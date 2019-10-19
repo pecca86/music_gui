@@ -6,7 +6,6 @@
  */
 public interface Command {
     
-    
     /**
      * invokes the execute method of the command we are calling
      */
@@ -17,5 +16,5 @@ public interface Command {
      * Undoes the last action made
      */
     public void undo();
-    
+
 }
