@@ -8,6 +8,8 @@ public class AlbumRemoveClass implements Command {
     
     Album album;
     Album subAlbum;
+    Album deleted;
+    AlbumCommander commander = new AlbumCommander();
     
     /**
      * @param album the parent album
@@ -21,13 +23,14 @@ public class AlbumRemoveClass implements Command {
     @Override
     public void execute() {
         System.out.println("Album removed");
+        deleted = subAlbum;
         album.removeSubAlbum(subAlbum);
     }
 
     @Override
     public void undo() {
         System.out.println("Undoing remove...");
-        album.addSubAlbum(album, subAlbum);
+        album.addSubAlbum(album, deleted);
     }
 
 }

@@ -22,8 +22,6 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	private JButton removeSoundClipsButton;	
 	private JButton playButton;
 	private JButton undoButton;
-	private JButton redoButton;
-
 	
 	/**
 	 * @param contr controller
@@ -55,9 +53,6 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		
 		undoButton = createUndoButton();
 		toolbar.add(undoButton);
-		
-		redoButton = createRedoButton();
-		toolbar.add(redoButton);
 		
 		this.add(toolbar);
 
@@ -158,18 +153,4 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	        return undoButton;
 	    }
 	   
-	   
-       private JButton createRedoButton() {
-           //ImageIcon playIcon = new ImageIcon("icons/play_32.png");
-           JButton redoButton = new JButton("Redo");
-           redoButton.setToolTipText("Redoes recent undone action");
-           redoButton.addActionListener(new ActionListener() {
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   controller.redoAction();
-               }
-           });
-           return redoButton;
-       }
-
 }

@@ -8,6 +8,9 @@ public class AlbumAddClass implements Command {
     
     Album album;
     Album subAlbum;
+    Album added;
+    
+    AlbumCommander commander;
 
     
     /**
@@ -23,7 +26,7 @@ public class AlbumAddClass implements Command {
     @Override
     public void execute() {
         System.out.println("Album added");
-        
+        added = subAlbum;
         album.addSubAlbum(album, subAlbum);
     }
 
@@ -31,8 +34,7 @@ public class AlbumAddClass implements Command {
     @Override
     public void undo() {
         System.out.println("Undoing add...");
-        
-        album.removeSubAlbum(subAlbum);
+        album.removeSubAlbum(added);
     }
 
 }

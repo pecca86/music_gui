@@ -1,3 +1,6 @@
 - Implementera Command pattern
 - i.o.m command pattern så är Controllerns metoder uppdaterade
 - går nu att välja flera låtar man vill ta bort från albumet
+- Command.java:
+	- store()
+	- load()

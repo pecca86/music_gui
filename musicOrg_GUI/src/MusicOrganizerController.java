@@ -76,6 +76,7 @@ public class MusicOrganizerController {
             
             // creates AlbumAdder and albumcommander
             AlbumAddClass albumAddClass = new AlbumAddClass(parent, child);
+            AlbumRemoveClass removeAlbum = new AlbumRemoveClass(parent, child);
             
             // sets the parameters for albumcommander and executes:
             albumCommander.setCommand(albumAddClass);
@@ -115,6 +116,7 @@ public class MusicOrganizerController {
 	    
 	    // Create a Album remove command
 	    AlbumRemoveClass albumRm = new AlbumRemoveClass(parent, selected);
+	    AlbumAddClass albumAddClass = new AlbumAddClass(parent, selected);
 	    
 	    // Set the command to the album commander and execute
 	    albumCommander.setCommand(albumRm);
@@ -208,12 +210,7 @@ public class MusicOrganizerController {
 	 * Undoes the recent action
 	 */
 	public void undoAction() {
-	    System.out.println("Undoing");
-	    Album a = view.getSelectedAlbum();
-	    a.undoAction();
-	    view.onClipsUpdated();
-	    
-	    view.onAlbumAdded(a.getChild());
+	    albumCommander.undoButtonWasPushed();
 	}
 	
 	

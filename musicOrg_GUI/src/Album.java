@@ -12,11 +12,11 @@ import java.util.List;
  * @version 17.9.2019
  *
  */
-public class Album implements Iterable<SoundClip>, Command {
+public class Album implements Iterable<SoundClip>{
     
     // COMMAND PATTERN START
     
-    Command slot;
+    Command command;
     
     // COMMAND PATTERN END
     
@@ -26,94 +26,8 @@ public class Album implements Iterable<SoundClip>, Command {
     private List<SoundClip> sounds = new ArrayList<SoundClip>();
     private String albumName;
 
-    //TODO undo method:
-    AlbumCaretaker caretaker = new AlbumCaretaker();
-    
-    /**
-     * Our memento class for storing old states
-     * @author pekka
-     * @version 12.10.2019
-     *
-     */
-    private class Memento {
-        
-        List<Album> mementoSub = new ArrayList<Album>();
-        List<SoundClip> mementoSounds = new ArrayList<SoundClip>();
-        
-        
-        /**
-         * Our memento constructor
-         * @param subAlbums memento arraylist of sub albums
-         * @param sounds memento array lsit of soundclips
-         */
-        public Memento(List<Album> subAlbums, List<SoundClip> sounds) {
-            this.mementoSub = subAlbums;
-            this.mementoSounds = sounds;
-        }
-    }
-    
-    
-    /**
-     * Tries to undo the last action taken
-     */
-    public void undoAction() {
-        caretaker.restoreState(this);
-    }
-    
-    
-    /**
-     * Save the state of our current object into a memento
-     * @return Memento object where we have saved the current objects state
-     */
-    public Memento save() {
-        
-        List<Album>saveAlb = new ArrayList<Album>();
-        saveAlb = this.getAlbums();
-        
-        List<SoundClip>saveSound = new ArrayList<SoundClip>();
-        saveSound = this.getSoundClips();
-        
-        
-        return new Memento(saveAlb, saveSound);
-    }
-    
-    
-    /**
-     * Restores to our last state
-     * @param objMemento a momento object where we have stored our resent state
-     */
-    public void restore(Object objMemento) {
-        Memento memento = (Memento) objMemento;
-        
-        
-        subAlbums = memento.mementoSub;
-        sounds = memento.mementoSounds;
-    }
-    
-    // COMMAND PATTERN METHODS:
-    
-    
-    @Override
-    public void execute() {
-        slot.execute();
-    }
 
 
-    @Override
-    public void undo() {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    public void setCommand(Command command) {
-        slot = command;
-    }
-    
-
-    // END OF COMMAND PATTERN METHODS:
-    
-    
-    
     /**
      * Album constructor
      * @param albumName the name of the album
@@ -179,8 +93,6 @@ public class Album implements Iterable<SoundClip>, Command {
      * @param subAlbum sub album
      */
     public void removeSubAlbum(Album subAlbum) {
-        caretaker.saveState(this);
-        
         subAlbums.remove(subAlbum);
     }
     
@@ -188,8 +100,6 @@ public class Album implements Iterable<SoundClip>, Command {
      * @param sound Object we want to add to our sub album and all its parent albums
      */
     public void addSong(SoundClip sound) {
-        caretaker.saveState(this);
-        
         sounds.add(sound);
         
         if ( parentAlbum != null ) {
@@ -203,8 +113,6 @@ public class Album implements Iterable<SoundClip>, Command {
      * @param sound Object we want to remove from our album and all its child albums
      */
     public void removeSong(SoundClip sound) {
-        caretaker.saveState(this);
-        
         sounds.remove(sound);
 
         for ( Album sub : subAlbums ) {
@@ -293,9 +201,7 @@ public class Album implements Iterable<SoundClip>, Command {
      * @param args not in use
      */
     public static void main(String[] args) {
-        
         //
-        
     }
 
 }

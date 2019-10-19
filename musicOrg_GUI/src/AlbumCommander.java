@@ -9,18 +9,28 @@ import java.util.List;
  */
 public class AlbumCommander {
     
-    Command command;
-    Command undoCommand;
+    
     List<Command> addCommands;
     List<Command> removeCommans;
+    
     Command addCommand;
     Command removeCommand;
+    Command undoCommand;
     
     /**
      * Our constructor
      */
     public AlbumCommander() {
         //
+    }
+    
+    
+    /**
+     * @param c our command
+     */
+    public void setCommand(Command c) {
+        addCommand = c;
+        removeCommand = c;
     }
     
 
@@ -51,21 +61,10 @@ public class AlbumCommander {
     
     
     /**
-     * @param c set the Class of which method we want to execute
-     */
-    public void setCommand(Command c) {
-        addCommand = c;
-        removeCommand = c;
-        undoCommand = c;
-    }
-    
-    
-    /**
      * Test method for class
      * @param args not in use
      */
     public static void main(String[] args) {
         //
     }
-
 }

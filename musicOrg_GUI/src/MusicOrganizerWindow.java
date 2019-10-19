@@ -204,6 +204,9 @@ public class MusicOrganizerWindow extends JFrame {
 	 * *****************************************************************
 	 */
 	
+	public void onUndo() {
+	    //
+	}
 	
 	
 	/**
@@ -233,7 +236,6 @@ public class MusicOrganizerWindow extends JFrame {
 				model.insertNodeInto(trnode, parent,
 						parent.getChildCount());
 				albumTree.scrollPathToVisible(new TreePath(trnode.getPath()));
-				
 			}
 		}
 	}
@@ -270,9 +272,5 @@ public class MusicOrganizerWindow extends JFrame {
 	public void onClipsUpdated(){
 		Album a = (Album) getSelectedTreeNode().getUserObject();
 		clipTable.display(a);
-	}
-	
-	public static void main(String[] args) {
-	    System.out.println("test");
 	}
 }
