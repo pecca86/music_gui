@@ -41,7 +41,7 @@ public class MementoCommand implements Command {
         storedState = new Memento(myAlbum);
         
         Album test = storedState.mementoAlbum;
-        System.out.println("now storing: " + test + " with albums: "  + test.getAlbums());
+        System.out.println("now storing album '" + test + "' with sub albums: "  + test.getAlbums());
     }
 
     @Override

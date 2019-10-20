@@ -67,7 +67,7 @@ public class MusicOrganizerController {
 	/**
 	 * Adds an album to the Music Organizer
 	 */
-	public void addNewAlbum(){ 
+	public void addNewAlbum() { 
 	    
 	    try {
 	        // prompts for new album name
@@ -85,14 +85,19 @@ public class MusicOrganizerController {
             albumCommander.setCommand(albumAddClass);
             albumCommander.onButtonWasPushed();
             
+            
             // updates the view
             view.onAlbumAdded(child);
 	        
+            mementoCommand = new MementoCommand(parent);
+            albumCommander.save(mementoCommand);
             
 	    } catch ( NullPointerException ex ) {
             view.showMessage("No album created!");
             return;
-        }
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Object not cloneable " + e);
+        } 
 	}
 	
 	
@@ -203,9 +208,7 @@ public class MusicOrganizerController {
 	 * Undoes the recent action
 	 */
 	public void undoAction() {
-	    //albumCommander.undoButtonWasPushed();
-	    Album albumSelected = view.getSelectedAlbum();
-	    caretaker.restoreState(albumSelected);
+	    albumCommander.restore(mementoCommand);
 	}
 	
 	
