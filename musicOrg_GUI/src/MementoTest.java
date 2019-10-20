@@ -13,8 +13,9 @@ public class MementoTest {
 
     /**
      * @param args not in use
+     * @throws CloneNotSupportedException if object is not clonable
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         
         
         
@@ -82,9 +83,8 @@ public class MementoTest {
         commander.onButtonWasPushed();
         System.out.println(album3.getAlbums());
         
-        //commander.save(mc);
         commander.restore(mc);
-        System.out.println(album3.getAlbums());
+        System.out.println("Final form: " + album3.getAlbums());
     }
 
 }

@@ -5,4 +5,9 @@
 - Memento Pattern:
 	- Fick Memento att fungera i själva consolen (se MementoTest.java) men inte i GUI:n
 	- Gjorde också en MementoCommand klass, men fick inte ihop logiken, klassen ännu kvar men används ingenstans
-	- Själva testet av MementoCommand klassen hittas även i MementoTest, av någon orsak så ändras det albumen som är sparat inne i memento private klassen, då ändringar görs i arbetskopian av albumet --- har inte kommit underfund varför...
+	- Själva testet av MementoCommand klassen hittas även i MementoTest, av någon orsak så ändras det albumen som är sparat inne i memento private klassen, då ändringar görs i arbetskopian av albumet,  har inte kommit underfund varför... 
+	- Försökt göra en clone av albumet, men clonen tar också in de nya albumen
+	- "Löste" problemet dumt på följande sätt:
+		- Då MementoCommand execute (=save) kallas, skapar den en klon av albumet vi vill spara
+		- Klonens subAlbum list pekar ändå på samma subAlbum list som orginal albumet, därför var den enda lösningen jag hittade på att då undo kallas, radera nuvarande subAlbum listan och kopiera in klonens subalbum lista (se MementoCommand.java undo())
+		- Jag har säkert blivit blind för någon lättare lösning på problemet, men de här ha nu gnagat på mej i flera dagar då ja inte hittar på någon bra lösning :)

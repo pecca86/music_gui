@@ -5,14 +5,15 @@ public class MementoCommand implements Command {
     
     private Memento storedState;
     
-    private Album album;
+    private Album myAlbum;
     
     
     /**
      * @param album the album which state we want to store
+     * @throws CloneNotSupportedException If we fail to make a clone out of the Album
      */
-    public MementoCommand(Album album) {
-        this.album = album;
+    public MementoCommand(Album album) throws CloneNotSupportedException {
+        myAlbum = album;
     }
     
     
@@ -21,16 +22,23 @@ public class MementoCommand implements Command {
         // variables
         Album mementoAlbum;
         
+        /**
+         * 
+         * @param album the album which state we want to store
+         */
         public Memento(Album album) {
-            this.mementoAlbum = album;
-            System.out.println("Albums stored: " + mementoAlbum.getAlbums());
+            try {
+                Album memAlb = album.clone();
+                this.mementoAlbum = memAlb;
+            } catch (CloneNotSupportedException e) {
+                System.out.println("Clone not supported! " + e);
+            }
         }
     }
 
     @Override
     public void execute() {
-        Album store = album;
-        storedState = new Memento(store);
+        storedState = new Memento(myAlbum);
         
         Album test = storedState.mementoAlbum;
         System.out.println("now storing: " + test + " with albums: "  + test.getAlbums());
@@ -38,8 +46,16 @@ public class MementoCommand implements Command {
 
     @Override
     public void undo() {
-        Album restored = storedState.mementoAlbum;
-        album = restored;
-        System.out.println("Memento albums restored: " + restored.getAlbums());
+        
+        Album cloneAlbum = storedState.mementoAlbum;
+        
+        //TODO: Smarter solution
+        // Copies albums from our cloned Album array to the album
+        List<Album> mementoAlbums = new ArrayList<Album>();
+        mementoAlbums = cloneAlbum.getAlbums();
+        
+        myAlbum.setAlbums(mementoAlbums);
+        
+        System.out.println("Memento albums restored: " + myAlbum.getAlbums());
     }
 }

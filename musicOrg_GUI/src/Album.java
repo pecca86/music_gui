@@ -12,7 +12,7 @@ import java.util.List;
  * @version 17.9.2019
  *
  */
-public class Album implements Iterable<SoundClip>{
+public class Album implements Iterable<SoundClip>, Cloneable{
     
     // COMMAND PATTERN START
     
@@ -197,11 +197,93 @@ public class Album implements Iterable<SoundClip>{
     
     
     /**
+     * @param mementoAlbums a new set of sub albums
+     * Deletes all the old sub albums from the subAlbum array and replaces them with a new set of subAlbums
+     */
+    public void setAlbums(List<Album> mementoAlbums) {
+        subAlbums.removeAll(subAlbums);
+        for ( Album a : mementoAlbums ) {
+            this.addSubAlbum(this, a);
+        }
+    }
+    
+    
+    /**
+     * Makes a clone out of our album
+     */
+    @Override
+    public Album clone() throws CloneNotSupportedException {
+        
+        Album cloneAlbum = new Album("clone");
+        Album myAlbum = this;
+        
+        ArrayList<Album> myList = new ArrayList<Album>();
+        
+        myList = myAlbum.getAlbums();
+        
+        for ( Album a : myList ) {
+            cloneAlbum.addSubAlbum(cloneAlbum, a);
+        }
+        return cloneAlbum;
+        
+    }
+    
+    
+    /**
      * A main method so we can test out the funtions of the class
      * @param args not in use
+     * @throws CloneNotSupportedException ll
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         //
+        Album orig = new Album("original");
+        Album cloneAlbum = new Album("Clone");
+        
+        Album first = new Album("first");
+        Album second = new Album("second");
+        
+        orig.addSubAlbum(orig, first);
+        
+        System.out.println(orig.getAlbums());
+        
+        cloneAlbum = orig.clone();
+        
+        System.out.println(cloneAlbum.getAlbums());
+        
+        orig.addSubAlbum(orig, second);
+        
+        System.out.println(orig.getAlbums());
+        System.out.println(cloneAlbum.getAlbums());
+        
+        List<Album> orgiList = new ArrayList<Album>();
+        List<Album> copyList = new ArrayList<Album>();
+        
+        orgiList.add(orig);
+        orgiList.add(cloneAlbum);
+        System.out.println(orgiList);
+        
+        copyList = orgiList;
+        System.out.println(copyList);
+        
+        orgiList.add(first);
+        System.out.println(orgiList);
+        System.out.println(copyList);
+        
+        List<Album> copyList2 = new ArrayList<Album>();
+        
+        for ( Album a : orgiList ) {
+            copyList2.add(a);
+        }
+        
+        System.out.println(copyList2);
+        
+        orgiList.add(second);
+        
+        System.out.println(copyList2);
+        System.out.println(orgiList);
+        
+        orgiList.removeAll(orgiList);
+        System.out.println(orgiList);
     }
     
     
