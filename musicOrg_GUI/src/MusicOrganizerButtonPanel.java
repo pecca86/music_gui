@@ -23,6 +23,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	private JButton playButton;
 	private JButton undoButton;
 	private JButton redoButton;
+	private JButton flagButton;
 
 	
 	/**
@@ -55,6 +56,9 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		
 		undoButton = createUndoButton();
 		toolbar.add(undoButton);
+		
+		flagButton = createFlagButton();
+		toolbar.add(flagButton);
 		
 		
 		this.add(toolbar);
@@ -155,5 +159,19 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	            }
 	        });
 	        return undoButton;
+	    }
+	   
+	   
+	   private JButton createFlagButton() {
+	        ImageIcon flagIcon = new ImageIcon("icons/Actions-flag-icon.png");
+	        JButton flagButton = new JButton(flagIcon);
+	        flagButton.setToolTipText("Flag a song");
+	        flagButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                controller.setFlag();
+	            }
+	        });
+	        return flagButton;
 	    }
 }

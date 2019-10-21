@@ -252,15 +252,27 @@ public class MusicOrganizerController {
 			e.printStackTrace();
 		}
 	}
-		
 
-	
 	
 	/**
 	 * Redoes the recent revoked action
 	 */
 	public void redoAction() {
 	    System.out.println("Redoing");
+	}
+	
+	
+	/**
+	 * Method for flagging selected song/s in the album
+	 */
+	public void setFlag() {
+		System.out.println("Setting flags!");
+		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
+		selectedSongs = view.getSelectedSoundClips();
+		for ( SoundClip sc : selectedSongs ) {
+			sc.setFlag();
+		}
+		view.onClipsUpdated();
 	}
 	
 	
