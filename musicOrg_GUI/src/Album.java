@@ -22,12 +22,23 @@ public class Album implements Iterable<SoundClip>, Cloneable{
     
     private Album parentAlbum;
     private Album childAlbum;
+<<<<<<< HEAD
     private List<Album> subAlbums = new ArrayList<Album>();
     private List<SoundClip> sounds = new ArrayList<SoundClip>();
     private String albumName;
 
 
 
+=======
+    private final List<Album> subAlbums = new ArrayList<Album>();
+    private List<SoundClip> sounds = new ArrayList<SoundClip>();
+    private String category;
+    private String albumName;
+    
+    private List<SoundClip> soundsOld = new ArrayList<SoundClip>();
+    private List<SoundClip> soundsNew = new ArrayList<SoundClip>();
+    
+>>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
     /**
      * Album constructor
      * @param albumName the name of the album
@@ -96,15 +107,28 @@ public class Album implements Iterable<SoundClip>, Cloneable{
         subAlbums.remove(subAlbum);
     }
     
+    
+    public void undoLastAction() {
+    	sounds = soundsOld;
+    }
+    
+    public void redoLastAction() {
+    	sounds = soundsNew;
+    }
+    
     /**
      * @param sound Object we want to add to our sub album and all its parent albums
      */
     public void addSong(SoundClip sound) {
+    	soundsOld = this.getSoundClips();
+    	
         sounds.add(sound);
         
         if ( parentAlbum != null ) {
             parentAlbum.addSong(sound);
         }
+        
+        soundsNew = this.getSoundClips();
     }
 
     
@@ -113,11 +137,15 @@ public class Album implements Iterable<SoundClip>, Cloneable{
      * @param sound Object we want to remove from our album and all its child albums
      */
     public void removeSong(SoundClip sound) {
+    	soundsOld = this.getSoundClips();
+    	
         sounds.remove(sound);
 
         for ( Album sub : subAlbums ) {
             sub.removeSong(sound);
         }
+        
+        soundsNew = this.getSoundClips();
     }
     
     
@@ -178,6 +206,17 @@ public class Album implements Iterable<SoundClip>, Cloneable{
     public ArrayList<SoundClip> getSoundClips() {
         ArrayList<SoundClip> found = new ArrayList<SoundClip>();
         for ( SoundClip sc : sounds ) {
+            found.add(sc);
+        }
+        return found;
+    }
+    
+    /**
+     * @return The albums soundclips in an arraylist
+     */
+    public ArrayList<SoundClip> getSoundClipsOld() {
+        ArrayList<SoundClip> found = new ArrayList<SoundClip>();
+        for ( SoundClip sc : soundsOld ) {
             found.add(sc);
         }
         return found;
@@ -244,6 +283,7 @@ public class Album implements Iterable<SoundClip>, Cloneable{
         
         orig.addSubAlbum(orig, first);
         
+<<<<<<< HEAD
         System.out.println(orig.getAlbums());
         
         cloneAlbum = orig.clone();
@@ -336,6 +376,31 @@ public class Album implements Iterable<SoundClip>, Cloneable{
      */
     public void restore(Object objMemento) {
         Memento memento = (Memento) objMemento;
+=======
+    	Album a = new Album("Rock");
+    	
+    	File file = new File("gey.avi");
+    	SoundClip sc = new SoundClip(file);
+    	
+    	
+    	
+    	
+    	// TESTING:
+    	a.addSong(sc);
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.removeSong(sc);
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.undoLastAction();
+    	System.out.println(a.getSoundClips().toString());
+    	System.out.println("old: " + a.getSoundClips().toString());
+    	
+    	a.redoLastAction();
+    	System.out.println(a.getSoundClips().toString());
+>>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
         
         subAlbums = memento.mementoSub;
         sounds = memento.mementoSounds;

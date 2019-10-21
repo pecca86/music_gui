@@ -22,6 +22,11 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	private JButton removeSoundClipsButton;	
 	private JButton playButton;
 	private JButton undoButton;
+<<<<<<< HEAD
+=======
+	private JButton redoButton;
+
+>>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 	
 	/**
 	 * @param contr controller
@@ -54,6 +59,12 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		undoButton = createUndoButton();
 		toolbar.add(undoButton);
 		
+<<<<<<< HEAD
+=======
+		redoButton = createRedoButton();
+		toolbar.add(redoButton);
+		
+>>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 		this.add(toolbar);
 
 	}
@@ -140,6 +151,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 	
 	
+<<<<<<< HEAD
 	   private JButton createUndoButton() {
 	        //ImageIcon playIcon = new ImageIcon("icons/play_32.png");
 	        JButton undoButton = new JButton("Undo");
@@ -153,4 +165,30 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	        return undoButton;
 	    }
 	   
+=======
+	private JButton createUndoButton() {
+		JButton undoButton = new JButton("Undo");
+		undoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.undoAction();
+			}
+		} );
+		return undoButton;
+	}
+	
+	
+	private JButton createRedoButton() {
+		JButton undoButton = new JButton("Redo");
+		undoButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.redoAction();
+			}
+		} );
+		return undoButton;
+	}
+
+>>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 }

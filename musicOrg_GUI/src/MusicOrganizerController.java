@@ -204,6 +204,22 @@ public class MusicOrganizerController {
 	}
 	
 	
+	public void undoAction() {
+		Album a = view.getSelectedAlbum();
+		a.undoLastAction();
+		view.onClipsUpdated();
+	}
+	
+	
+	public void redoAction() {
+		Album a = view.getSelectedAlbum();
+		a.redoLastAction();
+		view.onClipsUpdated();
+	}
+	
+	
+	
+	
 	/**
 	 * Undoes the recent action
 	 */
