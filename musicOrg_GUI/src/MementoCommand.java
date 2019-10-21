@@ -58,4 +58,12 @@ public class MementoCommand implements Command {
         
         System.out.println("Memento albums restored: " + myAlbum.getAlbums());
     }
+    
+    
+    public Album getAlbum() {
+    	System.out.println("Album returned: " + myAlbum);
+    	System.out.println("With subAlbums: "+ myAlbum.getAlbums());
+    	return myAlbum;
+    	
+    }
 }

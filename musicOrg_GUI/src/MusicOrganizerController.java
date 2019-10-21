@@ -21,6 +21,8 @@ public class MusicOrganizerController {
 	private AlbumCommander albumCommander = new AlbumCommander();
 	private AlbumCaretaker caretaker = new AlbumCaretaker();
 	private MementoCommand mementoCommand;
+	private boolean wasLastAddedAlbum = false;
+	private boolean wasLastRemovedAlbum = false;
 	
 	/**
 	 * Controller for the MusicOrganizer view
@@ -92,6 +94,10 @@ public class MusicOrganizerController {
             mementoCommand = new MementoCommand(parent);
             albumCommander.save(mementoCommand);
             
+            // so our undo function knows which restore to use
+            wasLastAddedAlbum = true;
+            wasLastRemovedAlbum = false;
+            
 	    } catch ( NullPointerException ex ) {
             view.showMessage("No album created!");
             return;
@@ -104,25 +110,33 @@ public class MusicOrganizerController {
 	
 	/**
 	 * Removes an album from the Music Organizer, except the root album
+	 * @throws  
 	 */
-	public void deleteAlbum(){ 
+	public void deleteAlbum() { 
 	    
-	    // Get the selected album
-	    Album selected = view.getSelectedAlbum();
-	    
-	    if ( selected == null) {
-	        view.showMessage("No albums selected!");
-	        return;
-	    }
-	    
-	    // Get the parent of the selected album
-	    Album parent = selected.getParent();
-	    if ( parent == null )  {
-	        view.showMessage("Album is not a subalbum!");
-	        return;
-	    }
+	
+	
+		
+	// Get the selected album
+	Album selected = view.getSelectedAlbum();
+	
+	if ( selected == null) {
+	    view.showMessage("No albums selected!");
+	    return;
+	}
+	
+	// Get the parent of the selected album
+	Album parent = selected.getParent();
+	if ( parent == null )  {
+	    view.showMessage("Album is not a subalbum!");
+	    return;
+	}
+	
+	view.onAlbumRemoved(selected);
+	
+	wasLastAddedAlbum = false;
+	wasLastRemovedAlbum = true;
 
-	    view.onAlbumRemoved(selected);
 	}
 	
 	
@@ -204,6 +218,7 @@ public class MusicOrganizerController {
 	}
 	
 	
+	/*
 	public void undoAction() {
 		Album a = view.getSelectedAlbum();
 		a.undoLastAction();
@@ -216,16 +231,29 @@ public class MusicOrganizerController {
 		a.redoLastAction();
 		view.onClipsUpdated();
 	}
-	
-	
+	*/
 	
 	
 	/**
 	 * Undoes the recent action
 	 */
 	public void undoAction() {
-	    albumCommander.restore(mementoCommand);
+		try {
+			albumCommander.restore(mementoCommand);
+			
+			Album a = mementoCommand.getAlbum();
+			Album child = a.getChild();
+			
+
+			view.onAlbumAdded(child);
+			mementoCommand = new MementoCommand(a);
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+		
+
 	
 	
 	/**

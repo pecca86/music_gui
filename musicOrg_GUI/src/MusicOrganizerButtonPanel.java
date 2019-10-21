@@ -22,11 +22,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	private JButton removeSoundClipsButton;	
 	private JButton playButton;
 	private JButton undoButton;
-<<<<<<< HEAD
-=======
 	private JButton redoButton;
 
->>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 	
 	/**
 	 * @param contr controller
@@ -59,12 +56,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		undoButton = createUndoButton();
 		toolbar.add(undoButton);
 		
-<<<<<<< HEAD
-=======
-		redoButton = createRedoButton();
-		toolbar.add(redoButton);
 		
->>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 		this.add(toolbar);
 
 	}
@@ -85,8 +77,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	
 	
 	private JButton createNewAlbumButton() {
-		//ImageIcon newAlbumIcon = new ImageIcon("icons/folder_add_32.png");
-		JButton newAlbumButton = new JButton("New Album");
+		ImageIcon newAlbumIcon = new ImageIcon("icons/folder_add_32.png");
+		JButton newAlbumButton = new JButton(newAlbumIcon);
 		newAlbumButton.setToolTipText("New Album");
 		newAlbumButton.addActionListener(new ActionListener() {
 			@Override
@@ -98,8 +90,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 	
 	private JButton createDeleteAlbumButton() {
-		//ImageIcon deleteAlbumIcon = new ImageIcon("icons/folder_delete_32.png");
-		JButton deleteAlbumButton = new JButton("Remove Album");
+		ImageIcon deleteAlbumIcon = new ImageIcon("icons/folder_delete_32.png");
+		JButton deleteAlbumButton = new JButton(deleteAlbumIcon);
 		deleteAlbumButton.setToolTipText("Delete Selected Album");
 		deleteAlbumButton.addActionListener(new ActionListener() {
 			@Override
@@ -111,8 +103,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 
 	private JButton createAddSoundClipsButton() {
-		//ImageIcon addSoundClipsIcon = new ImageIcon("icons/document_add_32.png");
-		JButton addSoundClipButton = new JButton("Add Sound Clips");
+		ImageIcon addSoundClipsIcon = new ImageIcon("icons/document_add_32.png");
+		JButton addSoundClipButton = new JButton(addSoundClipsIcon);
 		addSoundClipButton.setToolTipText("Add Selected Sound Clips To Selected Album");
 		addSoundClipButton.addActionListener(new ActionListener() {
 			@Override
@@ -125,8 +117,9 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 	
 	private JButton createRemoveSoundClipsButton() {
-		//ImageIcon removeSoundClipsIcon = new ImageIcon("icons/document_delete_32.png");
-		JButton removeSoundClipsButton = new JButton("Remove Sound Clips");
+		ImageIcon removeSoundClipsIcon = new ImageIcon("icons/document_delete_32.png");
+		JButton removeSoundClipsButton = new JButton(removeSoundClipsIcon);
+		//JButton removeSoundClipsButton = new JButton("Remove Sound Clips");
 		removeSoundClipsButton.setToolTipText("Remove Selected Sound Clips From Selected Album");
 		removeSoundClipsButton.addActionListener(new ActionListener() {
 			@Override
@@ -138,8 +131,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 	
 	private JButton createPlayButton() {
-		//ImageIcon playIcon = new ImageIcon("icons/play_32.png");
-		JButton playButton = new JButton("Play");
+		ImageIcon playIcon = new ImageIcon("icons/play_32.png");
+		JButton playButton = new JButton(playIcon);
 		playButton.setToolTipText("Play Selected Sound Clip");
 		playButton.addActionListener(new ActionListener() {
 			@Override
@@ -151,10 +144,9 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	}
 	
 	
-<<<<<<< HEAD
 	   private JButton createUndoButton() {
-	        //ImageIcon playIcon = new ImageIcon("icons/play_32.png");
-	        JButton undoButton = new JButton("Undo");
+	        ImageIcon undoIcon = new ImageIcon("icons/Actions-blue-arrow-undo-icon.png");
+	        JButton undoButton = new JButton(undoIcon);
 	        undoButton.setToolTipText("Undo recent action");
 	        undoButton.addActionListener(new ActionListener() {
 	            @Override
@@ -164,31 +156,4 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	        });
 	        return undoButton;
 	    }
-	   
-=======
-	private JButton createUndoButton() {
-		JButton undoButton = new JButton("Undo");
-		undoButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.undoAction();
-			}
-		} );
-		return undoButton;
-	}
-	
-	
-	private JButton createRedoButton() {
-		JButton undoButton = new JButton("Redo");
-		undoButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.redoAction();
-			}
-		} );
-		return undoButton;
-	}
-
->>>>>>> 86718e3ad3da74f1a604a8f01f91331e32341dfb
 }
