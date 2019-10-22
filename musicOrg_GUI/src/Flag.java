@@ -1,4 +1,8 @@
-
+/**
+ * Decorator class
+ * @author pekka
+ *
+ */
 public class Flag extends SoundDecorator {
 	
 	boolean b = false;
