@@ -47,6 +47,7 @@ public class GradedSongsAlbum extends SearchableAlbum {
 	public List<SoundClip> getSoundClips() {
 		ArrayList<SoundClip> found = new ArrayList<SoundClip>();
         for ( SoundClip sc : gradedSongs ) {
+        	//if (!sc.isGraded()) continue;
             found.add(sc);
         }
         return found;
@@ -60,5 +61,4 @@ public class GradedSongsAlbum extends SearchableAlbum {
 	public String toString() {
 		return "Great Sound Clips";
 	}
-
 }

@@ -96,16 +96,16 @@ public class SoundClip extends MasterSound {
 	
 	/**
 	 * Sets the grade of the file from 0 to 5
+	 * If the grading score is higher than 3 we set the isGraded to true, else false
 	 * @param grade grade 0 to 5, if graded anything else, it will default to -1
 	 */
 	public void setGrade(int grade) {
-		if ( grade < 0 || grade > 5 ) {
-			this.grade = -1;
-			isGraded = false;
-			return;
-		}
 		this.grade = grade;
-		isGraded = true;
+		if ( grade == -1 ) {
+			isGraded = false;
+		} else if ( grade > 3 ) {
+			isGraded = true;
+		}
 	}
 	
 	
@@ -126,5 +126,7 @@ public class SoundClip extends MasterSound {
 	public static void main(String[] args) {
 		File file1 = new File("Holy Diver");
 		SoundClip sc = new SoundClip(file1);
+		
+		System.out.println(sc.isGraded);
 	}
 }

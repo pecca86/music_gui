@@ -310,8 +310,8 @@ public class MusicOrganizerController {
 	public void setFlag() {
 		System.out.println("Setting flags!");
 		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
-		
 		selectedSongs = view.getSelectedSoundClips();
+		
 		for ( SoundClip sc : selectedSongs ) {
 			if ( !sc.isFlagged()) {
 				sc.setFlag();
@@ -332,29 +332,30 @@ public class MusicOrganizerController {
 	public void setGrade(int grade) {
 		int userGrade = grade;
 		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
-		
-		if ( grade < 0 || grade > 5) {
-			view.showMessage("grading removed!");
-			
-			selectedSongs = view.getSelectedSoundClips();
-			for ( SoundClip sc : selectedSongs ) {
-				sc.setGrade(userGrade);
-			}
-			
-			view.onClipsUpdated();
-			return;
-		}
-		
 		selectedSongs = view.getSelectedSoundClips();
-		for ( SoundClip sc : selectedSongs ) {
-			sc.setGrade(userGrade);
-		}
 		
-		view.showMessage("grade was set to: " + grade);
+		for ( SoundClip sc : selectedSongs) {
+			if ( !sc.isGraded() ) {
+				sc.setGrade(userGrade);
+				if (userGrade > 3 ) {
+					gradedSongs.addTagged(sc);
+				}
+			} else if ( sc.isGraded() ) {
+				sc.setGrade(userGrade);
+				if ( userGrade < 4 || !sc.isGraded() ) {
+					gradedSongs.removeTagged(sc);
+				}
+			}
+		}
+
 		view.onClipsUpdated();
 	}
 	
 	
+	/**
+	 * Gives the selected album
+	 * @return the selected album in the view
+	 */
 	public Album getAlbum() {
 		return view.getSelectedAlbum();
 	}
