@@ -30,8 +30,6 @@ public class Album implements Iterable<SoundClip>, Cloneable{
     private String category;
     private String albumName;
     
-    private List<SoundClip> soundsOld = new ArrayList<SoundClip>();
-    private List<SoundClip> soundsNew = new ArrayList<SoundClip>();
     
     /**
      * Album constructor
@@ -102,27 +100,15 @@ public class Album implements Iterable<SoundClip>, Cloneable{
     }
     
     
-    public void undoLastAction() {
-    	sounds = soundsOld;
-    }
-    
-    public void redoLastAction() {
-    	sounds = soundsNew;
-    }
-    
     /**
      * @param sound Object we want to add to our sub album and all its parent albums
      */
     public void addSong(SoundClip sound) {
-    	soundsOld = this.getSoundClips();
-    	
         sounds.add(sound);
         
         if ( parentAlbum != null ) {
             parentAlbum.addSong(sound);
         }
-        
-        soundsNew = this.getSoundClips();
     }
 
     
@@ -131,15 +117,11 @@ public class Album implements Iterable<SoundClip>, Cloneable{
      * @param sound Object we want to remove from our album and all its child albums
      */
     public void removeSong(SoundClip sound) {
-    	soundsOld = this.getSoundClips();
-    	
         sounds.remove(sound);
 
         for ( Album sub : subAlbums ) {
             sub.removeSong(sound);
         }
-        
-        soundsNew = this.getSoundClips();
     }
     
     
@@ -205,16 +187,6 @@ public class Album implements Iterable<SoundClip>, Cloneable{
         return found;
     }
     
-    /**
-     * @return The albums soundclips in an arraylist
-     */
-    public ArrayList<SoundClip> getSoundClipsOld() {
-        ArrayList<SoundClip> found = new ArrayList<SoundClip>();
-        for ( SoundClip sc : soundsOld ) {
-            found.add(sc);
-        }
-        return found;
-    }
     
     
     /**
