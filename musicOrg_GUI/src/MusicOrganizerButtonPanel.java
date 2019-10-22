@@ -120,7 +120,7 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		newAlbumButton.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
-				controller.addNewAlbum();
+					controller.addNewAlbum();
 			}
 		});
 		return newAlbumButton;
@@ -145,9 +145,8 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		addSoundClipButton.setToolTipText("Add Selected Sound Clips To Selected Album");
 		addSoundClipButton.addActionListener(new ActionListener() {
 			@Override
-            public void actionPerformed(ActionEvent e) {	
+            public void actionPerformed(ActionEvent e) {
 				controller.addSoundClips();
-
 			}
 		});
 		return addSoundClipButton;

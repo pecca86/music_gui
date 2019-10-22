@@ -16,6 +16,7 @@ public class MusicOrganizerController {
 	private SoundClipBlockingQueue queue;
 	private Album root;
 	private SearchableAlbum flaggedSongs = new FlaggedSongsAlbum("Flagged songs");
+	private SearchableAlbum gradedSongs = new GradedSongsAlbum("Graded songs");
 	private List<SoundClip> soundclips;
 	
 	//MEMENTO ATTRIBUTES:
@@ -66,8 +67,21 @@ public class MusicOrganizerController {
 		return root;
 	}
 	
-	public SearchableAlbum getSearchableAlbums() {
+	/**
+	 * gives the searchable album of flagged songs
+	 * @return flagged songs album
+	 */
+	public SearchableAlbum getFlaggedSongsAlbum() {
 		return flaggedSongs;
+	}
+	
+	
+	/**
+	 * gives the searchable album of graded songs
+	 * @return graded songs album
+	 */
+	public SearchableAlbum getGradedSongsAlbums() {
+		return gradedSongs;
 	}
 	
 	
@@ -77,6 +91,15 @@ public class MusicOrganizerController {
 	public void addNewAlbum() { 
 	    
 	    try {
+	    	
+	    	
+	    	if ( view.getSelectedAlbum().equals(gradedSongs) ||
+	    		view.getSelectedAlbum().equals(flaggedSongs) ) {
+	    		view.showMessage("Can't add sub albums to this album!");
+	    		return;
+	    	}
+	    	
+	    		
 	        // prompts for new album name
             String albumName = view.promptForAlbumName();
             if ( albumName.isEmpty() ) albumName = "new album";
@@ -158,6 +181,13 @@ public class MusicOrganizerController {
         	        return;
         	    }
         	    
+        	    if ( album.equals(gradedSongs) ||
+        	    		album.equals(flaggedSongs) ) {
+        	    		view.showMessage("Can't add songs to this album!");
+        	    		return;
+        	    }
+        	    	
+        	    
         	    // Choose file to add and put it in the SoundClip object
         	    JFileChooser j = new JFileChooser();
         	    j.showOpenDialog(view);
@@ -194,6 +224,13 @@ public class MusicOrganizerController {
 	    // Check if album is selected and if it contains soundclips
 	    if ( album == null ) return;
 	    if ( album.getSoundClips() == null ) return;
+	    
+	    // check if selected album is one of the searchable albums:
+	    if ( album.equals(gradedSongs) ||
+	    		album.equals(flaggedSongs) ) {
+	    		view.showMessage("Can't add remove songs from this album!");
+	    		return;
+	    }
 	    
 	    // Set the selected album's soundclip in to our soundclips arraylist
 	    soundclips = album.getSoundClips();
@@ -315,6 +352,11 @@ public class MusicOrganizerController {
 		
 		view.showMessage("grade was set to: " + grade);
 		view.onClipsUpdated();
+	}
+	
+	
+	public Album getAlbum() {
+		return view.getSelectedAlbum();
 	}
 	
 	

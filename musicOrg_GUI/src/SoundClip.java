@@ -127,5 +127,4 @@ public class SoundClip extends MasterSound {
 		File file1 = new File("Holy Diver");
 		SoundClip sc = new SoundClip(file1);
 	}
-	
 }

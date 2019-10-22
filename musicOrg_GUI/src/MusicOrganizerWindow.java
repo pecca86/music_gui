@@ -85,10 +85,14 @@ public class MusicOrganizerWindow extends JFrame {
 		tree_root.setUserObject((Album) controller.getRootAlbum());
 		
 		
-		DefaultMutableTreeNode albumTree = new DefaultMutableTreeNode("Tres");
-		albumTree.setUserObject( (SearchableAlbum) controller.getSearchableAlbums() );
+		DefaultMutableTreeNode flaggedAlbum = new DefaultMutableTreeNode("Flagged");
+		flaggedAlbum.setUserObject( (SearchableAlbum) controller.getFlaggedSongsAlbum() );
 		
-		tree_root.add(albumTree);
+		DefaultMutableTreeNode gradedAlbum = new DefaultMutableTreeNode("Graded");
+		gradedAlbum.setUserObject( (SearchableAlbum) controller.getGradedSongsAlbums() );
+		
+		tree_root.add(flaggedAlbum);
+		tree_root.add(gradedAlbum);
 		
 		
 		

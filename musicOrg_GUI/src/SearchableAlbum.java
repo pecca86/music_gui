@@ -1,16 +1,26 @@
 import java.io.File;
 import java.util.List;
 
-
+/**
+ * Abstract class for our searchable albums
+ * @author pekka
+ *
+ */
 public abstract class SearchableAlbum extends Album {
 	
 
-	
+	/**
+	 * Constructor
+	 * @param albumName the name of our searchable album
+	 */
 	public SearchableAlbum(String albumName) {
 		super(albumName);
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Initates the album
+	 */
 	final void initiateAlbum() {
 		addTagged(null);
 		removeTagged(null);
@@ -26,17 +36,4 @@ public abstract class SearchableAlbum extends Album {
 	@Override
 	public abstract String toString();
 	
-	
-	public static void main(String[] args) {
-		File f = new File("file!");
-		SoundClip sc = new SoundClip(f);
-		Album a = new Album("Rioc");
-		
-		a.addSong(sc);
-		
-		SearchableAlbum flaggedAlbum = new FlaggedSongsAlbum("Flagged Album");
-		System.out.println(a.getSoundClips());
-		System.out.println("Flagged: " + flaggedAlbum.getSoundClips());
-	}
-
 }
