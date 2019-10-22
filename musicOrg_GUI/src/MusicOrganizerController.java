@@ -277,6 +277,37 @@ public class MusicOrganizerController {
 	
 	
 	/**
+	 * Calls the setGrade method in our SoundClip class and set the grade to the soundclip
+	 * @param grade grade from 0-5, if grade remove we take in -1
+	 */
+	public void setGrade(int grade) {
+		int userGrade = grade;
+		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
+		
+		if ( grade < 0 || grade > 5) {
+			//userGrade = -1;
+			view.showMessage("grading removed!");
+			
+			selectedSongs = view.getSelectedSoundClips();
+			for ( SoundClip sc : selectedSongs ) {
+				sc.setGrade(userGrade);
+			}
+			
+			view.onClipsUpdated();
+			return;
+		}
+		
+		selectedSongs = view.getSelectedSoundClips();
+		for ( SoundClip sc : selectedSongs ) {
+			sc.setGrade(userGrade);
+		}
+		
+		view.showMessage("grade was set to: " + grade);
+		view.onClipsUpdated();
+	}
+	
+	
+	/**
 	 * For testing out the class
 	 * @param args not in use
 	 */

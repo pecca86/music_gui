@@ -11,7 +11,6 @@ public class SoundClip extends MasterSound {
 	private int grade = -1;
 	private boolean isGraded = false;
 	private MasterSound ms;
-	//private String name;
 	
 	
 	
@@ -87,12 +86,22 @@ public class SoundClip extends MasterSound {
 	
 	
 	/**
-	 * Sets the rank of the file from 0 to 5
+	 * Checks if the given sound clip is graded or not
+	 * @return false if not, else true
+	 */
+	public boolean isGraded() {
+		return isGraded;
+	}
+	
+	
+	/**
+	 * Sets the grade of the file from 0 to 5
 	 * @param grade grade 0 to 5, if graded anything else, it will default to -1
 	 */
 	public void setGrade(int grade) {
 		if ( grade < 0 || grade > 5 ) {
 			this.grade = -1;
+			isGraded = false;
 			return;
 		}
 		this.grade = grade;
@@ -101,8 +110,8 @@ public class SoundClip extends MasterSound {
 	
 	
 	/**
-	 * Gets the rank of the specifik file
-	 * @return the rank of the file
+	 * Gets the grade of the specifik file
+	 * @return the grade of the file
 	 */
 	public int getGrade() {
 		return this.grade;
@@ -134,12 +143,22 @@ public class SoundClip extends MasterSound {
 		
 		sc.setGrade(4);
 		System.out.println(sc.toString());
+		System.out.println(sc.isGraded);
+		
+		sc.setGrade(-1);
+		System.out.println(sc.toString());
+		System.out.println(sc.isGraded);
 		
 		sc.setGrade(1);
 		System.out.println(sc.toString());
+		System.out.println(sc.isGraded);
 		
-		sc.setGrade(6);
+		
+		sc.setGrade(111);
 		System.out.println(sc.toString());
+		System.out.println(sc.isGraded);
+		
+		
 
 	}
 	

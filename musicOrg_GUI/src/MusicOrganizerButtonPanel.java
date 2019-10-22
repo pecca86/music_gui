@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -22,8 +24,15 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	private JButton removeSoundClipsButton;	
 	private JButton playButton;
 	private JButton undoButton;
-	private JButton redoButton;
 	private JButton flagButton;
+	
+	// GRADING BUTTONS:
+	private JButton grade1;
+	private JButton grade2;
+	private JButton grade3;
+	private JButton grade4;
+	private JButton grade5;
+	private JButton rmGrade;
 
 	
 	/**
@@ -59,6 +68,30 @@ public class MusicOrganizerButtonPanel extends JPanel {
 		
 		flagButton = createFlagButton();
 		toolbar.add(flagButton);
+		
+		//GRADING BUTTONS:
+		Label rateLabel = new Label("Grade the song:");
+		toolbar.add(rateLabel);
+		
+		grade1 = createGrade1();
+		toolbar.add(grade1);
+		
+		grade2 = createGrade2();
+		toolbar.add(grade2);
+		
+		grade3 = createGrade3();
+		toolbar.add(grade3);
+		
+		grade4 = createGrade4();
+		toolbar.add(grade4);
+		
+		grade5 = createGrade5();
+		toolbar.add(grade5);
+		
+		rmGrade = createRmGrade();
+		toolbar.add(rmGrade);
+		
+		
 		
 		
 		this.add(toolbar);
@@ -174,4 +207,84 @@ public class MusicOrganizerButtonPanel extends JPanel {
 	        });
 	        return flagButton;
 	    }
+	   
+	   
+	   private JButton createGrade1() {
+			JButton rateButton = new JButton("1");
+			
+			rateButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(1);
+				}
+			});
+			
+			return rateButton;
+	   }
+
+		
+		private JButton createGrade2() {
+			JButton rateButton = new JButton("2");
+			
+			rateButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(2);
+				}
+			});
+			
+			return rateButton;
+		}
+		
+		private JButton createGrade3() {
+			JButton rateButton = new JButton("3");
+			
+			rateButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(3);
+				}
+			});
+			
+			return rateButton;
+		}
+		
+		private JButton createGrade4() {
+			JButton rateButton = new JButton("4");
+			
+			rateButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(4);
+				}
+			});
+			
+			return rateButton;
+		}
+		
+		private JButton createGrade5() {
+			JButton rateButton = new JButton("5");
+			
+			rateButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(5);
+				}
+			});
+			
+			return rateButton;
+		}
+		
+		public JButton createRmGrade() {
+			JButton rmButton = new JButton("Remove grading");
+			
+			rmButton.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					controller.setGrade(-1);
+				}
+			});
+			
+			return rmButton;
+		}
 }
