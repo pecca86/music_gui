@@ -15,6 +15,7 @@ public class MusicOrganizerController {
 	private MusicOrganizerWindow view;
 	private SoundClipBlockingQueue queue;
 	private Album root;
+	private SearchableAlbum flaggedSongs = new FlaggedSongsAlbum("Flagged songs");
 	private List<SoundClip> soundclips;
 	
 	//MEMENTO ATTRIBUTES:
@@ -63,6 +64,10 @@ public class MusicOrganizerController {
 	 */
 	public Album getRootAlbum(){
 		return root;
+	}
+	
+	public SearchableAlbum getSearchableAlbums() {
+		return flaggedSongs;
 	}
 	
 	
@@ -268,9 +273,16 @@ public class MusicOrganizerController {
 	public void setFlag() {
 		System.out.println("Setting flags!");
 		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
+		
 		selectedSongs = view.getSelectedSoundClips();
 		for ( SoundClip sc : selectedSongs ) {
-			sc.setFlag();
+			if ( !sc.isFlagged()) {
+				sc.setFlag();
+				flaggedSongs.addTagged(sc);
+			} else if ( sc.isFlagged() ) {
+				sc.setFlag();
+				flaggedSongs.removeTagged(sc);
+			}
 		}
 		view.onClipsUpdated();
 	}
@@ -285,7 +297,6 @@ public class MusicOrganizerController {
 		List<SoundClip> selectedSongs = new ArrayList<SoundClip>();
 		
 		if ( grade < 0 || grade > 5) {
-			//userGrade = -1;
 			view.showMessage("grading removed!");
 			
 			selectedSongs = view.getSelectedSoundClips();

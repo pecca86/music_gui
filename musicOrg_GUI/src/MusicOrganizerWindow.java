@@ -81,8 +81,16 @@ public class MusicOrganizerWindow extends JFrame {
 	 */
 	private JTree makeCatalogTree() {
 		
-		DefaultMutableTreeNode tree_root = new DefaultMutableTreeNode();
+		DefaultMutableTreeNode tree_root = new DefaultMutableTreeNode("Albums");
 		tree_root.setUserObject((Album) controller.getRootAlbum());
+		
+		
+		DefaultMutableTreeNode albumTree = new DefaultMutableTreeNode("Tres");
+		albumTree.setUserObject( (SearchableAlbum) controller.getSearchableAlbums() );
+		
+		tree_root.add(albumTree);
+		
+		
 		
 		final JTree tree = new JTree(tree_root);
 		tree.setMinimumSize(new Dimension(200, 400));

@@ -179,7 +179,7 @@ public class Album implements Iterable<SoundClip>, Cloneable{
     /**
      * @return The albums soundclips in an arraylist
      */
-    public ArrayList<SoundClip> getSoundClips() {
+    public List<SoundClip> getSoundClips() {
         ArrayList<SoundClip> found = new ArrayList<SoundClip>();
         for ( SoundClip sc : sounds ) {
             found.add(sc);
@@ -241,54 +241,6 @@ public class Album implements Iterable<SoundClip>, Cloneable{
      */
     public static void main(String[] args) throws CloneNotSupportedException {
         //
-        Album orig = new Album("original");
-        Album cloneAlbum = new Album("Clone");
-        
-        Album first = new Album("first");
-        Album second = new Album("second");
-        
-        orig.addSubAlbum(orig, first);
-        
-        System.out.println(orig.getAlbums());
-        
-        cloneAlbum = orig.clone();
-        
-        System.out.println(cloneAlbum.getAlbums());
-        
-        orig.addSubAlbum(orig, second);
-        
-        System.out.println(orig.getAlbums());
-        System.out.println(cloneAlbum.getAlbums());
-        
-        List<Album> orgiList = new ArrayList<Album>();
-        List<Album> copyList = new ArrayList<Album>();
-        
-        orgiList.add(orig);
-        orgiList.add(cloneAlbum);
-        System.out.println(orgiList);
-        
-        copyList = orgiList;
-        System.out.println(copyList);
-        
-        orgiList.add(first);
-        System.out.println(orgiList);
-        System.out.println(copyList);
-        
-        List<Album> copyList2 = new ArrayList<Album>();
-        
-        for ( Album a : orgiList ) {
-            copyList2.add(a);
-        }
-        
-        System.out.println(copyList2);
-        
-        orgiList.add(second);
-        
-        System.out.println(copyList2);
-        System.out.println(orgiList);
-        
-        orgiList.removeAll(orgiList);
-        System.out.println(orgiList);
     }
     
     
@@ -343,7 +295,7 @@ public class Album implements Iterable<SoundClip>, Cloneable{
         Memento memento = (Memento) objMemento;
     	Album a = new Album("Rock");
     	
-    	File file = new File("gey.avi");
+    	File file = new File("gary.avi");
     	SoundClip sc = new SoundClip(file);
     }
 }

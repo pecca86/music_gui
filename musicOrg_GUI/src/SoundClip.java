@@ -126,40 +126,6 @@ public class SoundClip extends MasterSound {
 	public static void main(String[] args) {
 		File file1 = new File("Holy Diver");
 		SoundClip sc = new SoundClip(file1);
-		
-		System.out.println(sc.toString());
-		
-		sc.setFlag();
-		System.out.println(sc.isFlagged);
-		System.out.println(sc.toString());
-		
-		sc.setFlag();
-		System.out.println(sc.isFlagged);
-		System.out.println(sc.toString());
-		
-		sc.setFlag();
-		System.out.println(sc.isFlagged);
-		System.out.println(sc.toString());
-		
-		sc.setGrade(4);
-		System.out.println(sc.toString());
-		System.out.println(sc.isGraded);
-		
-		sc.setGrade(-1);
-		System.out.println(sc.toString());
-		System.out.println(sc.isGraded);
-		
-		sc.setGrade(1);
-		System.out.println(sc.toString());
-		System.out.println(sc.isGraded);
-		
-		
-		sc.setGrade(111);
-		System.out.println(sc.toString());
-		System.out.println(sc.isGraded);
-		
-		
-
 	}
 	
 }
