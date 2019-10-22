@@ -3,6 +3,7 @@ import java.io.File;
 /**
  * SoundClip is a class representing a digital
  * sound clip file on disk.
+ * A Conrete component in our decorator pattern
  */
 public class SoundClip extends MasterSound {
 

@@ -1,4 +1,9 @@
 
+/**
+ * Our decorator patterns component base
+ * @author pekka
+ *
+ */
 public abstract class MasterSound {
 	protected String fileName = "Empty file name";
 	
